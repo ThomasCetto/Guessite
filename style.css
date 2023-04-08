@@ -1,0 +1,25 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+.navbar-bg{
+    background: rgb(0,212,255);
+    background: linear-gradient(270deg, rgba(0,212,255,1) 0%, rgba(123,123,255,1) 100%);
+}
+.footer-bg{
+    background: rgb(0,212,255);
+    background: linear-gradient(90deg, rgba(0,212,255,1) 0%, rgba(123,123,255,1) 100%);
+}
+.logo{
+    height: 50px;
+    width: 40px;
+    margin-left: 15px;
+}
+body{
+    background-color: #c8d2ff;
+}
