@@ -6,21 +6,19 @@ USE Guessite;
 
 CREATE TABLE accountStats
 (
-    statsID INT NOT NULL AUTO_INCREMENT,
+    username VARCHAR(20) PRIMARY KEY,
     tries   INT NOT NULL DEFAULT 0,
-    guessed INT NOT NULL DEFAULT 0,
-    PRIMARY KEY (statsID)
+    guessed INT NOT NULL DEFAULT 0
 ) ENGINE = INNODB;
 
 CREATE TABLE account
 (
-    userID   INT         NOT NULL AUTO_INCREMENT,
-    username VARCHAR(20) NOT NULL,
+    username VARCHAR(20) PRIMARY KEY,
     pw       VARCHAR(20) NOT NULL,
-    email    VARCHAR(30) NOT NULL UNIQUE,
-    stats    INT         NOT NULL,
-    PRIMARY KEY (userID),
-    FOREIGN KEY (stats) REFERENCES accountStats (statsID)
+    email    VARCHAR(30) NOT NULL,
+    stats    VARCHAR(20) NOT NULL,
+
+    FOREIGN KEY (username) REFERENCES accountStats (username)
 ) ENGINE = InnoDB;
 
 CREATE TABLE imageStats

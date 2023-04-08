@@ -20,7 +20,7 @@ $timestamp = time()
 
     <body>
         <div class="container">
-            <h1>Welcome to my website!</h1>
+            <h1>Welcome to my website!<?php include "scripts/db_connection.php"; ?></h1>
             <p>This is some sample content.</p>
         </div>
 
