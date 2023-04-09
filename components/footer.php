@@ -1,8 +1,6 @@
 <style>
-    .footer {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
+    #foot{
+        margin-top: auto;
     }
 
     .footer-bg {
@@ -11,9 +9,8 @@
     }
 </style>
 
-<footer class="footer footer-bg">
-    <div class="text-center p-3"
-    ">
+<footer id="foot" class="footer footer-bg">
+    <div class="text-center p-3">
     © 2023 Copyright:
     <a class="text-dark" href="https://github.com/ThomasCetto">Thomas Cetto</a>
     </div>

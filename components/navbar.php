@@ -27,6 +27,12 @@
                     <a class="fs-3 nav-link" aria-current="page" href="/index.php">Home | </a>
                 </li>
                 <li class="nav-item">
+                    <a class="fs-3 nav-link" href="/pages/drawPage.php">Disegna | </a>
+                </li>
+                <li class="nav-item">
+                    <a class="fs-3 nav-link" href="/pages/about.php">Sfida | </a>
+                </li>
+                <li class="nav-item">
                     <a class="fs-3 nav-link" href="/pages/about.php">Immagini | </a>
                 </li>
                 <li class="nav-item">

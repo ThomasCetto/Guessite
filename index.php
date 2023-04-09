@@ -18,16 +18,19 @@ if (session_status() == PHP_SESSION_NONE) {
     <link rel="stylesheet" href="style.css?v=<?php echo $timestamp ?>">
 </head>
 
+<body>
 <?php
 include "components/navbar.php";
-include "components/footer.php";
 ?>
 
-<body>
 <div class="container">
     <h1>Welcome to my website!</h1>
     <p>This is some sample content.</p>
 </div>
+
+<?php
+include "components/footer.php";
+?>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
