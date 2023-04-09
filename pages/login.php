@@ -4,10 +4,8 @@ session_set_cookie_params(30 * 24 * 60 * 60);
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-session_destroy();
-
-include_once "../scripts/db_connection.php";
-include_once "../scripts/userAuthentication.php";
+include "../scripts/db_connection.php";
+include "../scripts/userFunctions.php";
 
 // to refresh the css everytime (Altervista doesn't do it otherwise)
 $timestamp = time();
@@ -25,13 +23,14 @@ $timestamp = time();
     </head>
 
     <?php
-    include_once "../components/navbar.php";
+    include "../components/navbar.php";
     ?>
 
     <body>
     <?php
     $usError = ""; $pwError = "";
     $username=""; $pw = "";
+    echo "aaa: " . $_SESSION["username"];
 
 
     if(isset($_SESSION["username"])){
@@ -49,6 +48,7 @@ $timestamp = time();
             }else{
                 if(checkLogin($db_conn, $type, $username, $pw)){
                     $_SESSION["username"] = getUsernameFromEmail($db_conn, $username);
+                    echo "Hai eseguito l'accesso correttamente!";
                 }else{
                     $pwError = "Le credenziali non sono corrette...";
                     renderForm($usError, $pwError, $username, $pw);
@@ -77,7 +77,7 @@ $timestamp = time();
 
 
     <?php
-    include_once "../components/footer.php";
+    include "../components/footer.php";
     ?>
 
     <!-- Bootstrap JS -->
@@ -87,45 +87,6 @@ $timestamp = time();
 
 
 <?php
-
-function getUsernameFromEmail($db_conn, $email){
-    $query = "
-        SELECT username
-        FROM account
-        WHERE email = '" . $email . "';  
-    ";
-    try{
-        $data = mysqli_query($db_conn, $query);
-
-        // read the first row, and check if the password is correct
-        $row = mysqli_fetch_assoc($data);
-        return $row["username"];
-
-    }catch(Exception $e){
-        echo "Errore in getUsernameFromEmail -> " . $e->getMessage();
-    }
-    return "Unknown";
-}
-
-function checkLogin($db_conn, $field, $value, $pw): bool
-{
-    $query = "SELECT * 
-              FROM account 
-              WHERE " . $field . " = '" . $value . "';";
-
-    try{
-        $data = mysqli_query($db_conn, $query);
-
-        // read the first row, and check if the password is correct
-        $row = mysqli_fetch_assoc($data);
-        return strcmp($row["pw"], md5($pw)) === 0;
-
-    }catch(Exception $e){
-        echo "Errore in checkLogin -> " . $e->getMessage();
-    }
-    return False;
-}
-
 function renderForm($usError, $pwError, $username, $pw): void
 {
     ?>

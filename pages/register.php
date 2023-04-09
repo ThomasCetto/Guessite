@@ -6,7 +6,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 include "../scripts/db_connection.php";
-include "../scripts/userAuthentication.php";
+include "../scripts/userFunctions.php";
 
 // to refresh the css everytime (Altervista doesn't do it otherwise)
 $timestamp = time();
@@ -25,7 +25,7 @@ $timestamp = time();
 </head>
 
 <?php
-include_once "../components/navbar.php";
+include "../components/navbar.php";
 ?>
 
 <body>
@@ -76,7 +76,7 @@ if(isset($_SESSION["username"])){
 
 
     <?php
-    include_once "../components/footer.php";
+    include "../components/footer.php";
     ?>
 
     <!-- Bootstrap JS -->
@@ -86,22 +86,6 @@ if(isset($_SESSION["username"])){
 
 
 <?php
-
-function insertUser($db_conn, $username, $email, $pw){
-echo "pw before: " . $pw . "|||";
-    $pw = md5($pw);
-    echo "pw after: " . $pw . "|||";
-    $query1 = "INSERT INTO accountStats(`username`) VALUES ('$username');";
-    $query2 = "INSERT INTO account (`username`, `pw`, `email`, `stats`) VALUES ('$username', '$pw', '$email', '$username');";
-
-    try{
-        mysqli_query($db_conn, $query1);
-        mysqli_query($db_conn, $query2);
-    }catch(Exception $e){
-        echo "Errore in insertUser -> " . $e->getMessage();
-    }
-}
-
 function renderForm($usError, $emailError, $pwError, $termsError, $username, $email){
     ?>
 <div class="container h-100" style="margin-top: 30px; margin-bottom: 80px;">

@@ -7,6 +7,7 @@ USE Guessite;
 CREATE TABLE accountStats
 (
     username VARCHAR(20) PRIMARY KEY,
+    score INT NOT NULL DEFAULT 0,
     tries   INT NOT NULL DEFAULT 0,
     guessed INT NOT NULL DEFAULT 0
 ) ENGINE = INNODB;

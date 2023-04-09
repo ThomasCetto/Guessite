@@ -1,6 +1,10 @@
 <?php
 // to refresh the css everytime (Altervista doesn't refresh it otherwise)
-$timestamp = time()
+$timestamp = time();
+session_set_cookie_params(30 * 24 * 60 * 60);
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,13 +18,13 @@ $timestamp = time()
     </head>
 
     <?php
-    include_once "components/navbar.php";
-    include_once "components/footer.php";
+    include "components/navbar.php";
+    include "components/footer.php";
     ?>
 
     <body>
         <div class="container">
-            <h1>Welcome to my website!<?php include "scripts/db_connection.php"; ?></h1>
+            <h1>Welcome to my website!</h1>
             <p>This is some sample content.</p>
         </div>
 
