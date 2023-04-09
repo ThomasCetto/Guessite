@@ -8,12 +8,12 @@ echo "profile page";
 echo $_SESSION["username"];
 
 ?>
-<form action="#" method="POST">
-    <input name="sent" style="display:none;">
-    <input type="submit" value="logout">
-</form>
+    <form action="#" method="POST">
+        <input name="sent" style="display:none;">
+        <input type="submit" value="logout">
+    </form>
 
 <?php
-if(isset($_POST["sent"])){
+if (isset($_POST["sent"])) {
     $_SESSION["username"] = null;
 }

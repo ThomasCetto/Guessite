@@ -41,7 +41,7 @@
                 if (isset($_SESSION["username"])) {
                     ?>
                     <li class="nav-item">
-                        <a class="fs-4 nav-link" href="/pages/profile.php"><?php echo $_SESSION["username"]?></a>
+                        <a class="fs-4 nav-link" href="/pages/profile.php"><?php echo $_SESSION["username"] ?></a>
                     </li>
                     <?php
                 } else {

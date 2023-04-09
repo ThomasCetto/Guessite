@@ -18,8 +18,10 @@ $timestamp = time();
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Login</title>
         <!-- Bootstrap CSS -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-        <link rel="stylesheet" href="/style.css?v=<?php echo $timestamp;?>">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+              crossorigin="anonymous">
+        <link rel="stylesheet" href="/style.css?v=<?php echo $timestamp; ?>">
     </head>
 
     <?php
@@ -28,47 +30,48 @@ $timestamp = time();
 
     <body>
     <?php
-    $usError = ""; $pwError = "";
-    $username=""; $pw = "";
-    echo "aaa: " . $_SESSION["username"];
+    $usError = "";
+    $pwError = "";
+    $username = "";
+    $pw = "";
 
 
-    if(isset($_SESSION["username"])){
+    if (isset($_SESSION["username"])) {
         echo "Hai già effettuato l'accesso!";
-    }else if(isset($_POST["username"])){
+    } else if (isset($_POST["username"])) {
         $username = htmlspecialchars(trim($_POST["username"]));
         $pw = htmlspecialchars(trim($_POST["password"]));
 
         $type = (strpos($username, "@") !== false) ? "email" : "username";
 
-        if(strcmp($type, "email") === 0){
-            if(!emailExists($db_conn, $username)){
+        if (strcmp($type, "email") === 0) {
+            if (!emailExists($db_conn, $username)) {
                 $usError = "Questa email non è ancora stata registrata";
                 renderForm($usError, $pwError, $username, $pw);
-            }else{
-                if(checkLogin($db_conn, $type, $username, $pw)){
+            } else {
+                if (checkLogin($db_conn, $type, $username, $pw)) {
                     $_SESSION["username"] = getUsernameFromEmail($db_conn, $username);
                     echo "Hai eseguito l'accesso correttamente!";
-                }else{
+                } else {
                     $pwError = "Le credenziali non sono corrette...";
                     renderForm($usError, $pwError, $username, $pw);
                 }
             }
-        }else{
-            if(!userExists($db_conn, $username)){
+        } else {
+            if (!userExists($db_conn, $username)) {
                 $usError = "Questo utente non esiste";
                 renderForm($usError, $pwError, $username, $pw);
-            }else{
-                if(checkLogin($db_conn, $type, $username, $pw)){
+            } else {
+                if (checkLogin($db_conn, $type, $username, $pw)) {
                     $_SESSION["username"] = $username;
                     echo "Hai eseguito l'accesso correttamente!";
-                }else{
+                } else {
                     $pwError = "Le credenziali non sono corrette...";
                     renderForm($usError, $pwError, $username, $pw);
                 }
             }
         }
-    }else{
+    } else {
         renderForm($usError, $pwError, $username, $pw);
     }
 
@@ -81,7 +84,9 @@ $timestamp = time();
     ?>
 
     <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+            crossorigin="anonymous"></script>
     </body>
     </html>
 
@@ -105,8 +110,10 @@ function renderForm($usError, $pwError, $username, $pw): void
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            <input type="text" value="<?php echo $username;?>" id="form3Example1c" class="form-control" name="username" required/>
-                                            <label class="form-label" for="form3Example1c" style="color: red;"><?php echo $usError;?></label>
+                                            <input type="text" value="<?php echo $username; ?>" id="form3Example1c"
+                                                   class="form-control" name="username" required/>
+                                            <label class="form-label" for="form3Example1c"
+                                                   style="color: red;"><?php echo $usError; ?></label>
                                             <label class="form-label" for="form3Example1c">Username o email</label>
 
                                         </div>
@@ -115,8 +122,10 @@ function renderForm($usError, $pwError, $username, $pw): void
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            <input type="password" id="form3Example4c" class="form-control" name="password" required/>
-                                            <label class="form-label" for="form3Example4cd" style="color: red;"><?php echo $pwError;?></label>
+                                            <input type="password" id="form3Example4c" class="form-control"
+                                                   name="password" required/>
+                                            <label class="form-label" for="form3Example4cd"
+                                                   style="color: red;"><?php echo $pwError; ?></label>
                                             <label class="form-label" for="form3Example4c">Password</label>
 
                                         </div>
@@ -131,8 +140,11 @@ function renderForm($usError, $pwError, $username, $pw): void
                             </div>
                             <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
 
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
-                                     class="img-fluid" alt="Sample image">
+                                <img
+                                    src="../img/login.png"
+                                    class="img-fluid" alt="Sample image"
+                                    style="width: 550px; height: 400px;"
+                                >
 
                             </div>
                         </div>
