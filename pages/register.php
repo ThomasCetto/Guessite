@@ -46,25 +46,40 @@ include_once "../components/navbar.php";
 
 <body>
 <?php
+$usError = "";
+$emailError = "";
+$pwError = "";
+$termsError = "";
 
 if(isset($_SESSION["username"])){
     echo "Sei già registrato!";
 }else{
     if(isset($_POST["username"])){
         if(userExists($db_conn)){
-            renderForm("Questo username è già stato utilizzato");
-            echo "1";
+            $usError = "Questo username è già stato utilizzato";
+            renderForm($usError, $emailError, $pwError, $termsError);
         }else if(emailExists($db_conn)){
-            renderForm("Questa mail è già stata utilizzata");
-            echo "2";
-        }else{
-            insertUser($db_conn);
-            echo "Ti sei registrato con successo!";
-            echo "3";
+            $emailError = "Questa mail è già stata utilizzata";
+            renderForm($usError, $emailError, $pwError, $termsError);
+        }else if(strlen($_POST["password1"]) < 8){
+                $pwError = "La password deve avere almeno 8 caratteri!";
+                renderForm($usError, $emailError, $pwError, $termsError);
+            }
+            else if($_POST["password1"] !== $_POST["password2"]){
+                $pwError = "Le due password sono diverse!";
+                renderForm($usError, $emailError, $pwError, $termsError);
+            }else if(!isset($_POST["agree"])){
+                $termsError = "Devi accettare i termini di servizio";
+
+                renderForm($usError, $emailError, $pwError, $termsError);
+            }
+
+            else{
+                insertUser($db_conn);
+                echo "Ti sei registrato con successo!";
         }
     }else{
-        renderForm("");
-        echo "<h1>4</h1>";
+        renderForm($usError, $emailError, $pwError, $termsError);
     }
 }
 
@@ -86,17 +101,15 @@ if(isset($_SESSION["username"])){
 
 function insertUser($db_conn){
     $username = trim($_POST["username"]);
-    $password = MD5(trim($_POST["password"]));
+    $password = MD5(trim($_POST["password1"]));
     $email = trim($_POST["email"]);
 
-    $query = "
-        INSERT INTO accountStats(`username`) VALUES ('$username');
-        INSERT INTO account (`username`, `pw`, `email`, `stats`) VALUES ('$username', '$password', '$email', '$username');
-    ";
-    echo $query;
+    $query1 = "INSERT INTO accountStats(`username`) VALUES ('$username');";
+    $query2 = "INSERT INTO account (`username`, `pw`, `email`, `stats`) VALUES ('$username', '$password', '$email', '$username');";
 
     try{
-        mysqli_query($db_conn, $query);
+        mysqli_query($db_conn, $query1);
+        mysqli_query($db_conn, $query2);
     }catch(Exception $e){
         echo "Errore in insertUser -> " . $e->getMessage();
     }
@@ -132,8 +145,7 @@ function emailExists($db_conn){
     return True;
 }
 
-function renderForm($message){
-    echo $message;
+function renderForm($usError, $emailError, $pwError, $termsError){
     ?>
 <div class="container h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
@@ -151,7 +163,9 @@ function renderForm($message){
                                     <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                                     <div class="form-outline flex-fill mb-0">
                                         <input type="text" id="form3Example1c" class="form-control" name="username"/>
+                                        <label class="form-label" for="form3Example1c" style="color: red;"><?php echo $usError;?></label>
                                         <label class="form-label" for="form3Example1c">Username</label>
+
                                     </div>
                                 </div>
 
@@ -159,6 +173,7 @@ function renderForm($message){
                                     <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                                     <div class="form-outline flex-fill mb-0">
                                         <input type="email" id="form3Example3c" class="form-control" name="email"/>
+                                        <label class="form-label" for="form3Example3c" style="color: red;"><?php echo $emailError;?></label>
                                         <label class="form-label" for="form3Example3c">Your Email</label>
                                     </div>
                                 </div>
@@ -166,7 +181,7 @@ function renderForm($message){
                                 <div class="d-flex flex-row align-items-center mb-4">
                                     <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                                     <div class="form-outline flex-fill mb-0">
-                                        <input type="password" id="form3Example4c" class="form-control" name="password"/>
+                                        <input type="password" id="form3Example4c" class="form-control" name="password1"/>
                                         <label class="form-label" for="form3Example4c">Password</label>
                                     </div>
                                 </div>
@@ -174,15 +189,18 @@ function renderForm($message){
                                 <div class="d-flex flex-row align-items-center mb-4">
                                     <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                                     <div class="form-outline flex-fill mb-0">
-                                        <input type="password" id="form3Example4cd" class="form-control" name="rpassword"/>
+                                        <input type="password" id="form3Example4cd" class="form-control" name="password2"/>
                                         <label class="form-label" for="form3Example4cd">Repeat your password</label>
+                                        <label class="form-label" for="form3Example4cd" style="color: red;"><?php echo $pwError;?></label>
                                     </div>
                                 </div>
 
                                 <div class="form-check d-flex justify-content-center mb-5">
                                     <input class="form-check-input me-2" type="checkbox" value="yes" id="form2Example3c" name="agree"/>
                                     <label class="form-check-label" for="form2Example3">
-                                        I agree all statements in <a href="https://google.com">Terms of service</a>
+                                        <label class="form-label" for="form3Example4cd">Agree to our terms and services</label>
+                                        <label class="form-label" for="form3Example4cd" style="color: red;"><?php echo $termsError;?></label>
+
                                     </label>
                                 </div>
 
