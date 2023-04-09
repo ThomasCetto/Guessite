@@ -5,24 +5,8 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-//include "../scripts/db_connection.php";
-//global $db_conn;
-
-
-$db_host = "127.0.0.1";
-$db_user = "cetto5inc2022";
-$db_pass = "";
-$db_name = "my_cetto5inc2022";
-
-try {
-    $db_conn = @mysqli_connect($db_host, $db_user, $db_pass, $db_name);
-
-    if ($db_conn == null)
-        throw new exception (mysqli_connect_error() . ' Error n.' . mysqli_connect_errno());
-} catch (Exception $e) {
-    $error_message = $e->getMessage();
-}
-
+include "../scripts/db_connection.php";
+include "../scripts/userAuthentication.php";
 
 // to refresh the css everytime (Altervista doesn't do it otherwise)
 $timestamp = time();
@@ -34,7 +18,7 @@ $timestamp = time();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootstrap Header and Footer</title>
+    <title>Registrazione</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="/style.css?v=<?php echo $timestamp;?>">
@@ -45,6 +29,7 @@ include_once "../components/navbar.php";
 ?>
 
 <body>
+
 <?php
 $usError = ""; $emailError = ""; $pwError = ""; $termsError = "";
 $username=""; $email= ""; $pw1 = ""; $pw2 = "";
@@ -103,7 +88,9 @@ if(isset($_SESSION["username"])){
 <?php
 
 function insertUser($db_conn, $username, $email, $pw){
-    $pw = MD5($pw);
+echo "pw before: " . $pw . "|||";
+    $pw = md5($pw);
+    echo "pw after: " . $pw . "|||";
     $query1 = "INSERT INTO accountStats(`username`) VALUES ('$username');";
     $query2 = "INSERT INTO account (`username`, `pw`, `email`, `stats`) VALUES ('$username', '$pw', '$email', '$username');";
 
@@ -115,39 +102,9 @@ function insertUser($db_conn, $username, $email, $pw){
     }
 }
 
-function userExists($db_conn, $username){
-    $query = "SELECT COUNT(*) as count 
-              FROM account 
-              WHERE username = '" . $username . "'";
-    try{
-        $data = mysqli_query($db_conn, $query);
-        $row = mysqli_fetch_assoc($data);
-        return $row["count"] == 1;
-
-    }catch(Exception $e){
-        echo "Errore in userExists " . $e->getMessage();
-    }
-    return True;
-}
-
-function emailExists($db_conn, $email){
-    $query = "SELECT COUNT(*) as count 
-              FROM account 
-              WHERE email = '" . $email . "'";
-    try{
-        $data = mysqli_query($db_conn, $query);
-        $row = mysqli_fetch_assoc($data);
-        return $row["count"] == 1;
-
-    }catch(Exception $e){
-        echo "Errore in userExists " . $e->getMessage();
-    }
-    return True;
-}
-
 function renderForm($usError, $emailError, $pwError, $termsError, $username, $email){
     ?>
-<div class="container h-100">
+<div class="container h-100" style="margin-top: 30px; margin-bottom: 80px;">
     <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-lg-12 col-xl-11">
             <div class="card text-black" style="border-radius: 25px;">
@@ -155,7 +112,7 @@ function renderForm($usError, $emailError, $pwError, $termsError, $username, $em
                     <div class="row justify-content-center">
                         <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
-                            <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
+                            <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Registrati</p>
 
                             <form class="mx-1 mx-md-4" method="POST" action="#">
 
@@ -190,22 +147,21 @@ function renderForm($usError, $emailError, $pwError, $termsError, $username, $em
                                     <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                                     <div class="form-outline flex-fill mb-0">
                                         <input type="password" id="form3Example4cd" class="form-control" name="password2" required/>
-                                        <label class="form-label" for="form3Example4cd">Repeat your password</label>
                                         <label class="form-label" for="form3Example4cd" style="color: red;"><?php echo $pwError;?></label>
-                                    </div>
+                                        <label class="form-label" for="form3Example4cd">Repeat your password</label>
+                                       </div>
                                 </div>
 
                                 <div class="form-check d-flex justify-content-center mb-5">
                                     <input class="form-check-input me-2" type="checkbox" value="yes" id="form2Example3c" name="agree"/>
                                     <label class="form-check-label" for="form2Example3">
-                                        <label class="form-label" for="form3Example4cd">Agree to our terms and services</label>
                                         <label class="form-label" for="form3Example4cd" style="color: red;"><?php echo $termsError;?></label>
-
+                                        <label class="form-label" for="form3Example4cd">Agree to our terms and services</label>
                                     </label>
                                 </div>
 
                                 <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                    <input type="submit" class="btn btn-primary btn-lg" value="Register"></input>
+                                    <input type="submit" class="btn btn-primary btn-lg" value="Registrati"></input>
                                 </div>
 
                             </form>

@@ -12,10 +12,10 @@
                         <a class="fs-3 nav-link" aria-current="page" href="/index.php">Home  |  </a>
                     </li>
                     <li class="nav-item">
-                        <a class="fs-3 nav-link" href="/pages/notes.php">Notes  |  </a>
+                        <a class="fs-3 nav-link" href="/pages/about.php">Link 1  |  </a>
                     </li>
                     <li class="nav-item">
-                        <a class="fs-3 nav-link" href="/pages/shared.php">Shared  </a>
+                        <a class="fs-3 nav-link" href="/pages/about.php">Link 2  </a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
