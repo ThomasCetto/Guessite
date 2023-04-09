@@ -35,6 +35,9 @@ include "../components/navbar.php";
 
 <div class="grid-container">
     <h4 id="title">Disegna qui!</h4>
+    <h6>Tasto sinistro per il colore, destro per la gomma</h6>
+    <input type="range" min="1" max="5" value="1" step="2" class="slider" id="brush-size-slider" oninput="changeBrushSize()">
+    <span style="margin-left: 10px;" id="brush-size-label">1</span>
     <table>
         <?php
         for ($row = 0; $row < 28; $row++) {
