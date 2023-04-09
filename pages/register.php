@@ -46,40 +46,43 @@ include_once "../components/navbar.php";
 
 <body>
 <?php
-$usError = "";
-$emailError = "";
-$pwError = "";
-$termsError = "";
+$usError = ""; $emailError = ""; $pwError = ""; $termsError = "";
+$username=""; $email= ""; $pw1 = ""; $pw2 = "";
+if(isset($_POST["username"])){
+    $username = htmlspecialchars(trim($_POST["username"]));
+    $email = htmlspecialchars(trim($_POST["email"]));
+    $pw1 = htmlspecialchars(trim($_POST["password1"]));
+    $pw2 = htmlspecialchars(trim($_POST["password2"]));
+}
 
 if(isset($_SESSION["username"])){
     echo "Sei già registrato!";
 }else{
     if(isset($_POST["username"])){
-        if(userExists($db_conn)){
+        if(userExists($db_conn, $username)){
             $usError = "Questo username è già stato utilizzato";
-            renderForm($usError, $emailError, $pwError, $termsError);
-        }else if(emailExists($db_conn)){
+            renderForm($usError, $emailError, $pwError, $termsError, $username, $email);
+        }else if(emailExists($db_conn, $email)){
             $emailError = "Questa mail è già stata utilizzata";
-            renderForm($usError, $emailError, $pwError, $termsError);
-        }else if(strlen($_POST["password1"]) < 8){
-                $pwError = "La password deve avere almeno 8 caratteri!";
-                renderForm($usError, $emailError, $pwError, $termsError);
-            }
-            else if($_POST["password1"] !== $_POST["password2"]){
-                $pwError = "Le due password sono diverse!";
-                renderForm($usError, $emailError, $pwError, $termsError);
-            }else if(!isset($_POST["agree"])){
-                $termsError = "Devi accettare i termini di servizio";
-
-                renderForm($usError, $emailError, $pwError, $termsError);
-            }
-
-            else{
-                insertUser($db_conn);
-                echo "Ti sei registrato con successo!";
+            renderForm($usError, $emailError, $pwError, $termsError, $username, $email);
+        }else if(strlen($pw1) < 1){  // TODO: 1 -> 8
+            $pwError = "La password deve avere almeno 8 caratteri!";
+            renderForm($usError, $emailError, $pwError, $termsError, $username, $email);
+        }
+        else if($pw1 !== $pw2){
+            $pwError = "Le due password sono diverse!";
+            renderForm($usError, $emailError, $pwError, $termsError, $username, $email);
+        }else if(!isset($_POST["agree"])){
+            $termsError = "Devi accettare i termini di servizio";
+            renderForm($usError, $emailError, $pwError, $termsError, $username, $email);
+        }
+        else{
+            insertUser($db_conn, $username, $email, $pw1);
+            $_SESSION["username"] = $username;
+            echo "Ti sei registrato con successo!";
         }
     }else{
-        renderForm($usError, $emailError, $pwError, $termsError);
+        renderForm($usError, $emailError, $pwError, $termsError, $username, $email);
     }
 }
 
@@ -99,13 +102,10 @@ if(isset($_SESSION["username"])){
 
 <?php
 
-function insertUser($db_conn){
-    $username = trim($_POST["username"]);
-    $password = MD5(trim($_POST["password1"]));
-    $email = trim($_POST["email"]);
-
+function insertUser($db_conn, $username, $email, $pw){
+    $pw = MD5($pw);
     $query1 = "INSERT INTO accountStats(`username`) VALUES ('$username');";
-    $query2 = "INSERT INTO account (`username`, `pw`, `email`, `stats`) VALUES ('$username', '$password', '$email', '$username');";
+    $query2 = "INSERT INTO account (`username`, `pw`, `email`, `stats`) VALUES ('$username', '$pw', '$email', '$username');";
 
     try{
         mysqli_query($db_conn, $query1);
@@ -115,10 +115,10 @@ function insertUser($db_conn){
     }
 }
 
-function userExists($db_conn){
+function userExists($db_conn, $username){
     $query = "SELECT COUNT(*) as count 
               FROM account 
-              WHERE username = '" . $_POST['username'] . "'";
+              WHERE username = '" . $username . "'";
     try{
         $data = mysqli_query($db_conn, $query);
         $row = mysqli_fetch_assoc($data);
@@ -130,10 +130,10 @@ function userExists($db_conn){
     return True;
 }
 
-function emailExists($db_conn){
+function emailExists($db_conn, $email){
     $query = "SELECT COUNT(*) as count 
               FROM account 
-              WHERE username = '" . $_POST['email'] . "'";
+              WHERE email = '" . $email . "'";
     try{
         $data = mysqli_query($db_conn, $query);
         $row = mysqli_fetch_assoc($data);
@@ -145,7 +145,7 @@ function emailExists($db_conn){
     return True;
 }
 
-function renderForm($usError, $emailError, $pwError, $termsError){
+function renderForm($usError, $emailError, $pwError, $termsError, $username, $email){
     ?>
 <div class="container h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
@@ -162,7 +162,7 @@ function renderForm($usError, $emailError, $pwError, $termsError){
                                 <div class="d-flex flex-row align-items-center mb-4">
                                     <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                                     <div class="form-outline flex-fill mb-0">
-                                        <input type="text" id="form3Example1c" class="form-control" name="username"/>
+                                        <input type="text" value="<?php echo $username;?>" id="form3Example1c" class="form-control" name="username" required/>
                                         <label class="form-label" for="form3Example1c" style="color: red;"><?php echo $usError;?></label>
                                         <label class="form-label" for="form3Example1c">Username</label>
 
@@ -172,7 +172,7 @@ function renderForm($usError, $emailError, $pwError, $termsError){
                                 <div class="d-flex flex-row align-items-center mb-4">
                                     <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                                     <div class="form-outline flex-fill mb-0">
-                                        <input type="email" id="form3Example3c" class="form-control" name="email"/>
+                                        <input type="email" value="<?php echo $email;?>" id="form3Example3c" class="form-control" name="email" required/>
                                         <label class="form-label" for="form3Example3c" style="color: red;"><?php echo $emailError;?></label>
                                         <label class="form-label" for="form3Example3c">Your Email</label>
                                     </div>
@@ -181,7 +181,7 @@ function renderForm($usError, $emailError, $pwError, $termsError){
                                 <div class="d-flex flex-row align-items-center mb-4">
                                     <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                                     <div class="form-outline flex-fill mb-0">
-                                        <input type="password" id="form3Example4c" class="form-control" name="password1"/>
+                                        <input type="password" id="form3Example4c" class="form-control" name="password1" required/>
                                         <label class="form-label" for="form3Example4c">Password</label>
                                     </div>
                                 </div>
@@ -189,7 +189,7 @@ function renderForm($usError, $emailError, $pwError, $termsError){
                                 <div class="d-flex flex-row align-items-center mb-4">
                                     <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                                     <div class="form-outline flex-fill mb-0">
-                                        <input type="password" id="form3Example4cd" class="form-control" name="password2"/>
+                                        <input type="password" id="form3Example4cd" class="form-control" name="password2" required/>
                                         <label class="form-label" for="form3Example4cd">Repeat your password</label>
                                         <label class="form-label" for="form3Example4cd" style="color: red;"><?php echo $pwError;?></label>
                                     </div>
