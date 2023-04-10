@@ -11,6 +11,7 @@ try{
 
     if ($db_conn==null)
         throw new exception (mysqli_connect_error(). ' Error n.'. mysqli_connect_errno());
-} catch (Exception $e){
+} catch (Exception $e) {
     $error_message = $e->getMessage();
+    echo "Errore nella connessione con il database";
 }

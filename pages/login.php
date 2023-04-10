@@ -52,6 +52,7 @@ $timestamp = time();
                 if (checkLogin($db_conn, $type, $username, $pw)) {
                     $_SESSION["username"] = getUsernameFromEmail($db_conn, $username);
                     echo "Hai eseguito l'accesso correttamente!";
+                    header("Refresh:0; url=./profile.php");
                 } else {
                     $pwError = "Le credenziali non sono corrette...";
                     renderForm($usError, $pwError, $username, $pw);
@@ -65,6 +66,7 @@ $timestamp = time();
                 if (checkLogin($db_conn, $type, $username, $pw)) {
                     $_SESSION["username"] = $username;
                     echo "Hai eseguito l'accesso correttamente!";
+                    header("Refresh:0; url=./profile.php");
                 } else {
                     $pwError = "Le credenziali non sono corrette...";
                     renderForm($usError, $pwError, $username, $pw);

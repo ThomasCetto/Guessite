@@ -20,6 +20,7 @@ CREATE TABLE account
     stats    VARCHAR(20) NOT NULL,
 
     FOREIGN KEY (username) REFERENCES accountStats (username)
+        ON DELETE CASCADE
 ) ENGINE = InnoDB;
 
 CREATE TABLE imageStats

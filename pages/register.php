@@ -71,6 +71,7 @@ $timestamp = time();
                 insertUser($db_conn, $username, $email, $pw1);
                 $_SESSION["username"] = $username;
                 echo "Ti sei registrato con successo!";
+                header("Refresh:0; url=../index.php");
             }
         } else {
             renderForm($usError, $emailError, $pwError, $termsError, $username, $email);

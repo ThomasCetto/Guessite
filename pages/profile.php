@@ -1,18 +1,3 @@
-
-    <form action="#" method="POST">
-        <input name="sent" style="display:none;">
-        <input type="submit" value="logout">
-    </form>
-
-<?php
-if (isset($_POST["sent"])) {
-    $_SESSION["username"] = null;
-}
-
-
-
-
-
 <?php
 
 session_set_cookie_params(30 * 24 * 60 * 60);
@@ -47,9 +32,43 @@ $timestamp = time();
 include "../components/navbar.php";
 ?>
 
+<?php
+if (isset($_POST["logout"])) {
+    $_SESSION["username"] = null;
+    header("Refresh:0; url=../index.php");
+}else if(isset($_POST["delete"])){
+    deleteUser($db_conn, $_SESSION["username"]);
+    $_SESSION["username"] = null;
+    header("Refresh:0; url=../index.php");
+}
+
+
+?>
+
+
 
 
 <div id="pageContent">
+
+    <div class="container border border-primary rounded p-3" id="information">
+        <p id="title">Dati utente</p>
+        <p class="txt"><strong>Username:</strong><?php echo $_SESSION["username"];?> </p>
+        <p class="txt"><strong>Email:</strong> <?php echo getEmailFromUsername($db_conn, $_SESSION["username"])?> </p>
+    </div>
+
+    <form action="#" method="POST">
+        <input name="logout" style="display:none;">
+        <button type="submit" class="btn btn-primary border border-primary rounded-3 px-4 py-2">Esci dall'account</button>
+    </form>
+
+    <form action="#" method="POST">
+        <input name="delete" style="display:none;">
+        <button id="deleteButton" type="button" class="btn btn-danger border border-danger rounded-3 px-4 py-2" onclick="toggleDelete()">Elimina account</button>
+    </form>
+
+
+
+
 
 </div>
 
@@ -62,11 +81,28 @@ include "../components/footer.php";
 
 
 
+<script>
+    function toggleDelete() {
+        var button = document.getElementById("deleteButton");
+        var input = document.getElementsByName("delete")[0];
+
+        if (button.innerText === "Elimina account") {
+            button.innerText = "Conferma eliminazione";
+            button.style.backgroundColor = "orange";
+        } else {
+            input.value = "true";
+            button.type = "submit";
+        }
+    }
+</script>
+
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>
 </body>
-
-
 </html>
+
+
+<?php
+
