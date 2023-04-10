@@ -36,8 +36,11 @@ include "../components/navbar.php";
 <div class="grid-container">
     <h4 id="title">Disegna qui!</h4>
     <h6>Tasto sinistro per il colore, destro per la gomma</h6>
+
+    <!-- Slider -->
     <input type="range" min="1" max="5" value="1" step="2"
            class="slider" id="brush-size-slider" oninput="changeBrushSize()">
+
     <span style="margin-left: 10px;" id="brush-size-label">1</span>
     <table>
         <?php
@@ -71,7 +74,7 @@ include "../components/footer.php";
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>
 
-<script src="../js/draw.js?v=<?php echo $timestamp; ?>"></script>
+<script type="module" src="../js/draw.js?v=<?php echo $timestamp;?>"></script>
 </body>
 
 

@@ -5,8 +5,6 @@ let leftClick = false;
 let brushSize = 1;
 
 
-
-
 const cells = document.querySelectorAll('.cell');
 
 cells.forEach((cell) => {
@@ -69,3 +67,14 @@ function changeBrushSize() {
     const label = document.getElementById("brush-size-label");
     label.innerHTML = brushSize;
 }
+
+alert("3")
+import {Tensor, InferenceSession} from "onnxjs";
+const session = new InferenceSession();
+const url = "../models/SimpleCNNDigitModel.onnx"
+await session.loadModel(url)
+const input = [new Tensor(new Float32Array([1.0, 2.0, 3.0, 4.0]), "float32", [2,2])];
+const outputMap = await session.run(input)
+const outputTensor = outputMap.values().next().value
+
+
