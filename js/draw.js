@@ -26,11 +26,30 @@ cells.forEach((cell) => {
         }
     });
 
-    cell.addEventListener('mouseenter', () => {
-        if(leftClick){
-            cell.style.backgroundColor = "black";
-        }else if(rightClick){
-            cell.style.backgroundColor = "white";
+    cell.addEventListener('mouseenter', (event) => {
+        if (!rightClick && !leftClick) return;
+
+        let strokeSize = Math.max(0, brushSize-2);
+        let cellID = cell.id;
+        let split = cellID.split("-");
+        let cellRow = parseInt(split[1]);
+        let cellCol = parseInt(split[2]);
+        let cellToModify = document.getElementById("cell-" + cellRow + "-" + cellCol);
+        let color = cellToModify.style.backgroundColor;
+        if(leftClick) color = "black";
+        else if(rightClick) color = "white";
+        cellToModify.style.backgroundColor = color;
+
+        let ids = "";
+        for(let r = cellRow-strokeSize; r<cellRow+strokeSize+1; r++){
+            if(r < 0 || r > 27) continue;
+
+            for(let c= cellCol-strokeSize; c<cellCol+strokeSize+1; c++){
+                if(c < 0 || c > 27) continue;
+
+                let cellToModify = document.getElementById("cell-" + r + "-" + c);
+                cellToModify.style.backgroundColor = color;
+            }
         }
     });
 });
