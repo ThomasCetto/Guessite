@@ -1,15 +1,19 @@
 //to prevent right click pop up
 document.addEventListener('contextmenu', event => event.preventDefault());
-import * as onnx from '../node_modules/onnxjs/dist/onnx.min.js';
-
 
 
 let rightClick = false;
 let leftClick = false;
-let brushSize = 1;
-
-
+let brushSize = 3;
 const cells = document.querySelectorAll('.cell');
+const resultContainer = document.getElementById("results");
+let session = null;
+
+async function loadModel(){
+    session = await ort.InferenceSession.create('../models/SimpleCNNDigitModel2.onnx');
+}
+
+loadModel()
 
 cells.forEach((cell) => {
     cell.addEventListener('mousedown', (event) => {
@@ -26,6 +30,7 @@ cells.forEach((cell) => {
         } else if (event.which === 3) {
             rightClick = false;
         }
+
     });
 
     cell.addEventListener('mouseenter', (event) => {
@@ -53,8 +58,12 @@ cells.forEach((cell) => {
                 cellToModify.style.backgroundColor = color;
             }
         }
+
+        refreshProbs();
     });
 });
+
+
 
 function clearCells(){
     const cells = document.querySelectorAll('.cell');
@@ -72,7 +81,6 @@ function changeBrushSize() {
     label.innerHTML = brushSize;
 }
 
-alert("4")
 
 function softmax(arr) {
     const max = Math.max(...arr);
@@ -81,31 +89,40 @@ function softmax(arr) {
     return exps.map(x => x/sumExps);
 }
 
-async function main() {
-    try {
-        const session = await ort.InferenceSession.create('../models/SimpleCNNDigitModel2.onnx');
-        const data = new Float32Array(28*28);
-        for (let i = 0; i < 28*28; i++) {
-            data[i] = 0;
-        }
+function getGridValues(){
+    const cells = document.getElementsByClassName('cell');
+    const pixelValues = new Float32Array(28*28);
+    for (let i = 0; i < cells.length; i++) {
+        const cellColor = cells[i].style.backgroundColor;
+        pixelValues[i] = cellColor === 'white' ? 0.0039 : 0;
+    }
 
-        for(let i=0; i<20; i++){
-            data[14 + 14*i] = 0.0039;
-        }
+    return pixelValues;
+}
+alert("1")
 
-        const tensor = new ort.Tensor('float32', data, [1, 1, 28, 28]);
+
+
+async function refreshProbs() {
+        const input = getGridValues();
+        const tensor = new ort.Tensor('float32', input, [1, 1, 28, 28]);
+
         const feeds = { "input.1": tensor};
         const results = await session.run(feeds);
+
+
         const dataOutput = results.outputName.data;
-        console.log(dataOutput)
         const dataArray = Array.from(dataOutput)
-        console.log(dataArray)
-        const softmaxed = softmax(dataArray);
+        const probs = softmax(dataArray);
+        const  maxProb = Math.max(...probs)
 
-        document.write(`data of result tensor 'c': ${softmaxed}`);
+        for (let i = 0; i < probs.length; i++) {
+            const element = document.getElementById(`prediction-${i}`);
+            element.children[0].children[0].style.height = `${probs[i] * 100}%`;
+            element.className =
+                probs[i] === maxProb
+                    ? "prediction-col top-prediction"
+                    : "prediction-col";
+        }
 
-    } catch (e) {
-        document.write(`failed to inference ONNX model: ${e}.`);
-    }
 }
-main()
