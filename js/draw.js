@@ -1,4 +1,8 @@
+//to prevent right click pop up
 document.addEventListener('contextmenu', event => event.preventDefault());
+import * as onnx from '../node_modules/onnxjs/dist/onnx.min.js';
+
+
 
 let rightClick = false;
 let leftClick = false;
@@ -68,13 +72,40 @@ function changeBrushSize() {
     label.innerHTML = brushSize;
 }
 
-alert("3")
-import {Tensor, InferenceSession} from "onnxjs";
-const session = new InferenceSession();
-const url = "../models/SimpleCNNDigitModel.onnx"
-await session.loadModel(url)
-const input = [new Tensor(new Float32Array([1.0, 2.0, 3.0, 4.0]), "float32", [2,2])];
-const outputMap = await session.run(input)
-const outputTensor = outputMap.values().next().value
+alert("4")
 
+function softmax(arr) {
+    const max = Math.max(...arr);
+    const exps = arr.map(x => Math.exp(x - max));
+    const sumExps = exps.reduce((acc, val) => acc + val, 0);
+    return exps.map(x => x/sumExps);
+}
 
+async function main() {
+    try {
+        const session = await ort.InferenceSession.create('../models/SimpleCNNDigitModel2.onnx');
+        const data = new Float32Array(28*28);
+        for (let i = 0; i < 28*28; i++) {
+            data[i] = 0;
+        }
+
+        for(let i=0; i<20; i++){
+            data[14 + 14*i] = 0.0039;
+        }
+
+        const tensor = new ort.Tensor('float32', data, [1, 1, 28, 28]);
+        const feeds = { "input.1": tensor};
+        const results = await session.run(feeds);
+        const dataOutput = results.outputName.data;
+        console.log(dataOutput)
+        const dataArray = Array.from(dataOutput)
+        console.log(dataArray)
+        const softmaxed = softmax(dataArray);
+
+        document.write(`data of result tensor 'c': ${softmaxed}`);
+
+    } catch (e) {
+        document.write(`failed to inference ONNX model: ${e}.`);
+    }
+}
+main()

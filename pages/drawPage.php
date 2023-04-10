@@ -23,6 +23,9 @@ $timestamp = time();
           crossorigin="anonymous">
     <link rel="stylesheet" href="/style.css?v=<?php echo $timestamp; ?>">
     <link rel="stylesheet" href="/css/draw.css?v=<?php echo $timestamp; ?>">
+
+    <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web/dist/ort.min.js"></script>
+
 </head>
 
 
