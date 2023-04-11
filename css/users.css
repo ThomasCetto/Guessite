@@ -1,0 +1,46 @@
+#pageContent{
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+.txt{
+    font-size: x-large;
+    margin: 25px;
+}
+.tab{
+    overflow:hidden;
+    width: 75%;
+    margin: 0 auto;
+}
+th, td{
+    text-align: center;
+}
+#left-container{
+    text-align: center;
+    margin-top: 3%;
+}
+#right-container{
+    text-align: center;
+    margin-top: 3%;
+}
+#search-container{
+    text-align: center;
+    margin: 30px 20px 20px;
+}
+h1{
+    margin-bottom: 40px;
+}
+.vertical-line {
+    position: absolute;
+    left: 50%;
+    width: 3px;
+    top: 25%;
+    background-color: black;
+    border-radius: 2px;
+    transform: translateX(-50%);
+    z-index: 9999;
+    height: 50%;
+}
+#searchButton{
+    margin-left: 2%;
+}

@@ -95,7 +95,7 @@ function getEmailFromUsername($db_conn, $username){
         $row = mysqli_fetch_assoc($data);
         return $row["email"];
     } catch (Exception $e) {
-        echo "Errore in checkLogin -> " . $e->getMessage();
+        echo "Errore in getEmailFromUsername -> " . $e->getMessage();
     }
     return "Error";
 }
@@ -108,25 +108,49 @@ function deleteUser($db_conn, $username){
         $row = mysqli_fetch_assoc($data);
         echo "Fatto bruh";
     } catch (Exception $e) {
-        echo "Errore in userExists " . $e->getMessage();
+        echo "Errore in deleteUser " . $e->getMessage();
     }
 }
-
-function getDBConnection(){
-    $db_host = "localhost";
-    $db_user = "cetto5inc2022";
-    $db_pass = "";
-    $db_name = "my_cetto5inc2022";
-
-    global $db_conn;
-    try{
-        $db_conn = @mysqli_connect($db_host, $db_user, $db_pass, $db_name);
-
-        if ($db_conn==null)
-            throw new exception (mysqli_connect_error(). ' Error n.'. mysqli_connect_errno());
+function getLeaderboard($db_conn, $howMany){
+    $query = "
+        SELECT ROW_NUMBER() OVER (ORDER BY s.score DESC) AS pos, 
+           a.username, 
+           s.score, 
+           s.tries, 
+           s.guessed
+        FROM account AS a, accountStats AS s
+        WHERE a.stats = s.username 
+        ORDER BY s.score DESC LIMIT 0, $howMany;
+";
+    try {
+        return mysqli_query($db_conn, $query);
     } catch (Exception $e) {
-        $error_message = $e->getMessage();
-        echo "Errore nella connessione con il database";
+        echo "Errore in getLeaderboard() " . $e->getMessage();
     }
-    return $db_conn;
+    return null;
+}
+
+function getUserFromLeaderboard($db_conn, $username){
+    $query = "
+        SELECT pos, username, score, tries, guessed
+        FROM (
+            SELECT ROW_NUMBER() OVER (ORDER BY s.score DESC) AS pos, 
+                a.username,   
+                s.score, 
+                s.tries, 
+                s.guessed
+            FROM account AS a, accountStats AS s
+            WHERE a.stats = s.username 
+            ORDER BY s.score DESC
+        ) as tab
+        WHERE username = '" . $username . "';
+    ";
+
+    try {
+        $result = mysqli_query($db_conn, $query);
+        return mysqli_fetch_assoc($result);
+    } catch (Exception $e) {
+        echo "Errore in getUserFromLeaderboard " . $e->getMessage();
+    }
+    return null;
 }

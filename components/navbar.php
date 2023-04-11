@@ -27,16 +27,13 @@
                     <a class="fs-3 nav-link" aria-current="page" href="/index.php">Home | </a>
                 </li>
                 <li class="nav-item">
-                    <a class="fs-3 nav-link" href="/pages/drawPage.php">Disegna | </a>
+                    <a class="fs-3 nav-link" href="/pages/draw.php">Disegna | </a>
                 </li>
                 <li class="nav-item">
-                    <a class="fs-3 nav-link" href="/pages/about.php">Sfida | </a>
+                    <a class="fs-3 nav-link" href="/pages/draw.php">Sfida | </a>
                 </li>
                 <li class="nav-item">
-                    <a class="fs-3 nav-link" href="/pages/about.php">Immagini | </a>
-                </li>
-                <li class="nav-item">
-                    <a class="fs-3 nav-link" href="/pages/about.php">Utenti </a>
+                    <a class="fs-3 nav-link" href="/pages/users.php">Utenti </a>
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
