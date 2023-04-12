@@ -99,7 +99,6 @@ function getGridValues(){
 
     return pixelValues;
 }
-alert("1")
 
 
 

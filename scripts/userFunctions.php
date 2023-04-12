@@ -68,21 +68,8 @@ function getUsernameFromEmail($db_conn, $email)
 
 function checkLogin($db_conn, $field, $value, $pw): bool
 {
-    $query = "SELECT * 
-              FROM account 
-              WHERE " . $field . " = '" . $value . "';";
-
-    try {
-        $data = mysqli_query($db_conn, $query);
-
-        // read the first row, and check if the password is correct
-        $row = mysqli_fetch_assoc($data);
-        return strcmp($row["pw"], md5($pw)) === 0;
-
-    } catch (Exception $e) {
-        echo "Errore in checkLogin -> " . $e->getMessage();
-    }
-    return False;
+    $pwInDatabase = getPassword($db_conn, $field, $value);
+    return strcmp($pwInDatabase, md5($pw)) === 0;
 }
 
 function getEmailFromUsername($db_conn, $username){
@@ -151,6 +138,46 @@ function getUserFromLeaderboard($db_conn, $username){
         return mysqli_fetch_assoc($result);
     } catch (Exception $e) {
         echo "Errore in getUserFromLeaderboard " . $e->getMessage();
+    }
+    return null;
+}
+
+function changePassword($db_conn, $username, $old, $new): bool
+{
+    if(strlen($new) <= 1) return false;
+
+    $pwInDatabase = getPassword($db_conn, "username", $username);
+    // if the user inputs the old password wrong it doesn't do anything
+    if(strcmp($pwInDatabase, md5($old)) !== 0) return false;
+
+    $query = "
+        UPDATE account
+        SET pw = '" . md5($new) . "' 
+        WHERE username = '" . $username . "';
+    ";
+
+    try {
+        mysqli_query($db_conn, $query);
+        return true;
+
+    } catch (Exception $e) {
+        echo "Errore in changePassword -> " . $e->getMessage();
+    }
+    return false;
+}
+
+function getPassword($db_conn, $field, $value){
+    $query = "SELECT * 
+              FROM account 
+              WHERE " . $field . " = '" . $value . "';";
+
+    try {
+        $data = mysqli_query($db_conn, $query);
+        $row = mysqli_fetch_assoc($data);
+        return $row["pw"];
+
+    } catch (Exception $e) {
+        echo "Errore in getPassword -> " . $e->getMessage();
     }
     return null;
 }

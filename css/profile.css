@@ -13,3 +13,9 @@ form{
     font-size: xx-large;
     margin: 10px;
 }
+.pwInput{
+    margin: 5px 5px 10px;
+}
+#pwButton{
+    margin-top: 10px;
+}

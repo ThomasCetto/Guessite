@@ -33,6 +33,9 @@ include "../components/navbar.php";
 ?>
 
 <?php
+
+$pwChangedMessage = "";
+
 if (isset($_POST["logout"])) {
     $_SESSION["username"] = null;
     header("Refresh:0; url=../index.php");
@@ -40,6 +43,9 @@ if (isset($_POST["logout"])) {
     deleteUser($db_conn, $_SESSION["username"]);
     $_SESSION["username"] = null;
     header("Refresh:0; url=../index.php");
+}else if(isset($_POST["oldpw"]) && isset($_POST["newpw"])){
+    $pwChanged = changePassword($db_conn,  $_SESSION["username"], htmlspecialchars($_POST["oldpw"]), htmlspecialchars($_POST["newpw"]));
+    $pwChangedMessage = $pwChanged ? " - (La password è stata modificata con successo!)" : "- (Controlla che la password inserita sia corretta)";
 }
 
 
@@ -54,6 +60,12 @@ if (isset($_POST["logout"])) {
         <p id="title">Dati utente</p>
         <p class="txt"><strong>Username:</strong><?php echo $_SESSION["username"];?> </p>
         <p class="txt"><strong>Email:</strong> <?php echo getEmailFromUsername($db_conn, $_SESSION["username"])?> </p>
+        <p class="txt"><strong>Modifica password <?php echo $pwChangedMessage;?> </strong></p>
+        <form action="#" method="POST">
+            <input class="pwInput" type="text" name="oldpw" placeholder="Vecchia password..." required><br>
+            <input class="pwInput" type="text" name="newpw" placeholder="Nuova password..." required><br>
+            <button id="pwButton" type="submit" class="btn btn-primary border border-primary rounded-3 px-4 py-2">Conferma</button>
+        </form>
     </div>
 
     <form action="#" method="POST">
@@ -83,8 +95,8 @@ include "../components/footer.php";
 
 <script>
     function toggleDelete() {
-        var button = document.getElementById("deleteButton");
-        var input = document.getElementsByName("delete")[0];
+        let button = document.getElementById("deleteButton");
+        let input = document.getElementsByName("delete")[0];
 
         if (button.innerText === "Elimina account") {
             button.innerText = "Conferma eliminazione";
@@ -94,6 +106,7 @@ include "../components/footer.php";
             button.type = "submit";
         }
     }
+
 </script>
 
 <!-- Bootstrap JS -->
