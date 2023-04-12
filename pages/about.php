@@ -1,3 +1,6 @@
 <?php
 echo "about page";
-echo $_SESSION["username"];
+
+?>
+<br>
+<a href="../index.php">Torna alla home</a>

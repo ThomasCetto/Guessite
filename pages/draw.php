@@ -41,10 +41,12 @@ include "../components/navbar.php";
         <h6>Tasto sinistro per il colore, destro per la gomma</h6>
 
         <!-- Slider -->
-        <input type="range" min="1" max="5" value="3" step="2"
-               class="slider" id="brush-size-slider" oninput="changeBrushSize()">
-        <span style="margin-left: 10px;" id="brush-size-label">3</span>
-
+        <div id="brushContainer">
+            <label id="brushLabel" for="brush-size-slider">Dimensione pennello: &nbsp&nbsp&nbsp</label>
+            <input type="range" min="1" max="5" value="3" step="2"
+                   class="slider" id="brush-size-slider" oninput="changeBrushSize()">
+            <span style="margin-left: 10px;" id="brush-size-label">3</span>
+        </div>
 
         <table>
             <?php
@@ -141,9 +143,8 @@ include "../components/navbar.php";
             </div>
         </div>
     </div>
-    </div>
-
 </div>
+
 
 <?php
 include "../components/footer.php";

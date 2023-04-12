@@ -78,3 +78,19 @@ table{
     color: #0000ff;
     font-weight: bold;
 }
+
+#brushLabel {
+    text-align: center;
+}
+
+#brushContainer {
+    display: inline-flex; /* Use inline-flex instead of flex */
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5%;
+    border: 2px solid black;
+    border-radius: 5px;
+    flex-wrap: nowrap; /* Prevent text and input from wrapping */
+    padding: 1%;
+}
+
