@@ -5,16 +5,26 @@
     }
 
     .logo {
-        height: 50px;
-        width: 40px;
+        width: 75%;
+        height: 90%;
+    }
+    #logoContainer{
+        width: 60px;
+        height: 60px;
         margin-left: 15px;
+        border: 1px solid black;
+        border-radius: 4px;
+        text-align: center;
     }
 </style>
 
 <nav class="navbar navbar-bg  navbar-expand-lg bg-body-tertiary sticky-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">
-            <img src="/img/logo.png" alt="Logo" class="logo d-inline-block align-text-top">
+        <a class="navbar-brand" href="/index.php">
+            <div id="logoContainer">
+                <img src="/img/logo.png" alt="Logo" class="logo d-inline-block align-text-top">
+            </div>
+
         </a>
         <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"

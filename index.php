@@ -27,8 +27,8 @@ include "components/navbar.php";
 
 
 <div id="pageContent">
-    <div class="row" id="titleRow"></div>
-        <h1 class="col text-center" id="title">Modalità</h1><br>
+    <div class="row" id="titleRow">
+        <h1 class="col text-center" id="title">Modalità</h1>
     </div>
     <div class="row">
         <div class="col-md-6" id="left-container">
@@ -51,6 +51,7 @@ include "components/navbar.php";
 
         </div>
     </div>
+</div>
 
 
 
