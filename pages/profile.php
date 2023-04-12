@@ -21,7 +21,7 @@ $timestamp = time();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
           crossorigin="anonymous">
-    <link rel="stylesheet" href="/style.css?v=<?php echo $timestamp; ?>">
+    <link rel="stylesheet" href="/css/style.css?v=<?php echo $timestamp; ?>">
     <link rel="stylesheet" href="/css/profile.css?v=<?php echo $timestamp; ?>">
 </head>
 
@@ -58,8 +58,8 @@ if (isset($_POST["logout"])) {
 
     <div class="container border border-primary rounded p-3" id="information">
         <p id="title">Dati utente</p>
-        <p class="txt"><strong>Username:</strong><?php echo $_SESSION["username"];?> </p>
-        <p class="txt"><strong>Email:</strong> <?php echo getEmailFromUsername($db_conn, $_SESSION["username"])?> </p>
+        <p class="txt"><strong>Username:&nbsp&nbsp&nbsp</strong><?php echo $_SESSION["username"];?> </p>
+        <p class="txt"><strong>Email:&nbsp&nbsp&nbsp</strong> <?php echo getEmailFromUsername($db_conn, $_SESSION["username"])?> </p>
         <p class="txt"><strong>Modifica password <?php echo $pwChangedMessage;?> </strong></p>
         <form action="#" method="POST">
             <input class="pwInput" type="text" name="oldpw" placeholder="Vecchia password..." required><br>

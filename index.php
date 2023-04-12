@@ -15,8 +15,8 @@ if (session_status() == PHP_SESSION_NONE) {
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css?v=<?php echo $timestamp ?>">
-
+    <link rel="stylesheet" href="css/style.css?v=<?php echo $timestamp;?>">
+    <link rel="stylesheet" href="css/home.css?v=<?php echo $timestamp;?>">
 
 </head>
 
@@ -25,10 +25,37 @@ if (session_status() == PHP_SESSION_NONE) {
 include "components/navbar.php";
 ?>
 
-<div class="container">
-    <h1>Welcome to my website!</h1>
-    <p>This is some sample content.</p>
-</div>
+
+<div id="pageContent">
+    <div class="row" id="titleRow"></div>
+        <h1 class="col text-center" id="title">Modalità</h1><br>
+    </div>
+    <div class="row">
+        <div class="col-md-6" id="left-container">
+            <h2>Disegno</h2>
+            <div class="container border border-primary border-2 rounded p-3">
+                <img src="img/drawPreview2.png" alt="draw preview" id="drawPreview">
+            </div>
+            <a href="./pages/draw.php">
+                <button class="redir btn btn-primary border border-primary rounded-2 px-4 py-2">Vai!</button>
+            </a>
+        </div>
+
+        <div class="col-md-6" id="right-container">
+            <h2>Sfida</h2>
+            <div class="container border border-primary rounded border-2 p-3">
+
+
+                <p>Coming soon...</p>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
 
 <?php
 include "components/footer.php";

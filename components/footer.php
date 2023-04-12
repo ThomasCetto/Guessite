@@ -4,8 +4,8 @@
     }
 
     .footer-bg {
-        background: rgb(0, 212, 255);
-        background: linear-gradient(90deg, rgba(0, 212, 255, 1) 0%, rgba(123, 123, 255, 1) 100%);
+        background: rgb(150,150,255);
+        background: linear-gradient(270deg, rgba(150,150,255,1) 0%, rgba(0,212,255,1) 100%);
     }
 </style>
 
