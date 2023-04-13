@@ -70,6 +70,14 @@ include "../components/navbar.php";
     </div>
 
     <div id="results">
+        <p>Scegli quale modello usare:</p>
+        <div class="btn-group" role="group" aria-label="Button group">
+            <input onclick=changeModel(0) type="radio" class="btn-check" name="options" id="option1" autocomplete="off" checked>
+            <label class="btn btn-primary" for="option1">V1 - Bassa precisione (il mio)</label>
+            <input onclick=changeModel(1) type="radio" class="btn-check" name="options" id="option2" autocomplete="off">
+            <label class="btn btn-primary" for="option2">V2 - Alta precisione</label>
+        </div>
+
         <p>Predizione del modello: </p>
         <div class="predictions">
             <div class="prediction-col" id="prediction-0">

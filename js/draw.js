@@ -8,9 +8,20 @@ let brushSize = 3;
 const cells = document.querySelectorAll('.cell');
 const resultContainer = document.getElementById("results");
 let session = null;
+let modelNames = ["SimpleCNNDigitModel2.onnx", "muchBetterDigitClassificator.onnx"];
+let inputNames = ["input.1", "Input3"]
+let outputNames = ["outputName", "Plus214_Output_0"]
+let modelChosenIndex = 0;
+
+
+function changeModel(index){
+    modelChosenIndex = index;
+    loadModel();
+}
 
 async function loadModel(){
-    session = await ort.InferenceSession.create('../models/SimpleCNNDigitModel2.onnx');
+    let modelName = modelNames[modelChosenIndex];
+    session = await ort.InferenceSession.create('../models/' + modelName);
 }
 
 loadModel()
@@ -63,6 +74,18 @@ cells.forEach((cell) => {
     });
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+    let btns = document.querySelectorAll('.btn-group .btn');
+
+    btns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            btns.forEach(function(btn) {
+                btn.classList.remove('active'); // Remove active class from other buttons
+            });
+            this.classList.add('active'); // Add active class to clicked button
+        });
+    });
+});
 
 
 function clearCells(){
@@ -81,7 +104,6 @@ function changeBrushSize() {
     label.innerHTML = brushSize;
 }
 
-
 function softmax(arr) {
     const max = Math.max(...arr);
     const exps = arr.map(x => Math.exp(x - max));
@@ -89,12 +111,16 @@ function softmax(arr) {
     return exps.map(x => x/sumExps);
 }
 
-function getGridValues(){
+// i used black on white background, the other models the did opposite
+function getGridValues(mine){
+    let blackValue = mine ? 0 : 255;
+    let whiteValue = mine ? 0.0039 : 0;
+
     const cells = document.getElementsByClassName('cell');
     const pixelValues = new Float32Array(28*28);
     for (let i = 0; i < cells.length; i++) {
         const cellColor = cells[i].style.backgroundColor;
-        pixelValues[i] = cellColor === 'white' ? 0.0039 : 0;
+        pixelValues[i] = cellColor === 'white' ? whiteValue : blackValue;
     }
 
     return pixelValues;
@@ -103,25 +129,32 @@ function getGridValues(){
 
 
 async function refreshProbs() {
-        const input = getGridValues();
-        const tensor = new ort.Tensor('float32', input, [1, 1, 28, 28]);
+    const input = getGridValues(modelChosenIndex === 0);
+    const tensor = new ort.Tensor('float32', input, [1, 1, 28, 28]);
 
-        const feeds = { "input.1": tensor};
-        const results = await session.run(feeds);
+    let inputName = inputNames[modelChosenIndex];
+    let outputName = outputNames[modelChosenIndex];
 
+    // ask data
+    const feeds = {[inputName]: tensor};
+    const results = await session.run(feeds);
 
-        const dataOutput = results.outputName.data;
-        const dataArray = Array.from(dataOutput)
-        const probs = softmax(dataArray);
-        const  maxProb = Math.max(...probs)
+    // get data
+    const dataOutput = results[outputName].data;
+    const dataArray = Array.from(dataOutput)
 
-        for (let i = 0; i < probs.length; i++) {
-            const element = document.getElementById(`prediction-${i}`);
-            element.children[0].children[0].style.height = `${probs[i] * 100}%`;
-            element.className =
-                probs[i] === maxProb
-                    ? "prediction-col top-prediction"
-                    : "prediction-col";
-        }
+    // process data
+    const probs = softmax(dataArray);
+    const  maxProb = Math.max(...probs)
+
+    // change bar heights
+    for (let i = 0; i < probs.length; i++) {
+        const element = document.getElementById(`prediction-${i}`);
+        element.children[0].children[0].style.height = `${probs[i] * 100}%`;
+        element.className =
+            probs[i] === maxProb
+                ? "prediction-col top-prediction"
+                : "prediction-col";
+    }
 
 }
