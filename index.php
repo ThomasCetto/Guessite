@@ -34,6 +34,7 @@ include "components/navbar.php";
         <div class="col-md-6" id="left-container">
             <h2>Disegno</h2>
             <div class="container border border-primary border-2 rounded p-3">
+                <p>Sfida l'Intelligenza Artificiale!</p>
                 <img src="img/numberGrid.png" alt="number grid">
                 <img src="img/numberGuess.png" alt="number guess">
             </div>

@@ -37,7 +37,7 @@ include "../components/navbar.php";
 
 <div id="pageContent">
     <div class="grid-container">
-        <h4 id="title">Disegna qui!</h4>
+        <h4 id="title">Disegna un numero qui!</h4>
         <h6>Tasto sinistro per il colore, destro per la gomma</h6>
 
         <!-- Slider -->
