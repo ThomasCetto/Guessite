@@ -34,8 +34,10 @@ include "components/navbar.php";
         <div class="col-md-6" id="left-container">
             <h2>Disegno</h2>
             <div class="container border border-primary border-2 rounded p-3">
-                <img src="img/drawPreview2.png" alt="draw preview" id="drawPreview">
+                <img src="img/numberGrid.png" alt="number grid">
+                <img src="img/numberGuess.png" alt="number guess">
             </div>
+
             <a href="./pages/draw.php">
                 <button class="redir btn btn-primary border border-primary rounded-2 px-4 py-2">Vai!</button>
             </a>

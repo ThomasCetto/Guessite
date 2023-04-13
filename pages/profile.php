@@ -62,8 +62,8 @@ if (isset($_POST["logout"])) {
         <p class="txt"><strong>Email:&nbsp&nbsp&nbsp</strong> <?php echo getEmailFromUsername($db_conn, $_SESSION["username"])?> </p>
         <p class="txt"><strong>Modifica password <?php echo $pwChangedMessage;?> </strong></p>
         <form action="#" method="POST">
-            <input class="pwInput" type="text" name="oldpw" placeholder="Vecchia password..." required><br>
-            <input class="pwInput" type="text" name="newpw" placeholder="Nuova password..." required><br>
+            <input class="pwInput" type="password" name="oldpw" placeholder="Vecchia password..." required><br>
+            <input class="pwInput" type="password" name="newpw" placeholder="Nuova password..." required><br>
             <button id="pwButton" type="submit" class="btn btn-primary border border-primary rounded-3 px-4 py-2">Conferma</button>
         </form>
     </div>
