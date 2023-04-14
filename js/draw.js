@@ -17,6 +17,8 @@ let modelChosenIndex = 0;
 function changeModel(index){
     modelChosenIndex = index;
     loadModel();
+    clearCells();
+    clearProbs();
 }
 
 async function loadModel(){
@@ -94,6 +96,14 @@ function clearCells(){
     cells.forEach((cell) => {
         cell.style.backgroundColor = "white";
     });
+}
+
+function clearProbs(){
+    for (let i = 0; i < 10; i++) {
+        const element = document.getElementById(`prediction-${i}`);
+        element.children[0].children[0].style.height = `0%`;
+        element.className = "prediction-col";
+    }
 }
 
 function changeBrushSize() {
