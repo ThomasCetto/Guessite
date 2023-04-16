@@ -52,9 +52,6 @@ if(isset($_POST["guessInput"])){
     echo "Added $points points";
 }
 
-
-
-
 include "../components/navbar.php";
 ?>
 
