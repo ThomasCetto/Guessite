@@ -181,3 +181,17 @@ function getPassword($db_conn, $field, $value){
     }
     return null;
 }
+
+function addPoints($db_conn, $amount){
+    $query = "
+    UPDATE accountStats
+    SET score = score + $amount 
+    WHERE username = '" . $_SESSION["username"] . "';
+    ";
+
+    try {
+        mysqli_query($db_conn, $query);
+    } catch (Exception $e) {
+        echo "Errore in addPoints -> " . $e->getMessage();
+    }
+}

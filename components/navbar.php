@@ -40,7 +40,7 @@
                     <a class="fs-3 nav-link" href="/pages/draw.php">Disegna | </a>
                 </li>
                 <li class="nav-item">
-                    <a class="fs-3 nav-link" href="/pages/draw.php">Sfida | </a>
+                    <a class="fs-3 nav-link" href="/pages/guess.php">Sfida | </a>
                 </li>
                 <li class="nav-item">
                     <a class="fs-3 nav-link" href="/pages/users.php">Utenti </a>

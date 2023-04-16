@@ -1,0 +1,13 @@
+#left-container{
+    background-color: red;
+}
+#right-container{
+    background-color: blue;
+}
+#imageContainer{
+    background-color: orange;
+}
+#imageToGuess{
+    width: 280px;
+    height: 280px;
+}

@@ -18,12 +18,6 @@ function changeModel(index){
     modelChosenIndex = index;
     loadModel();
     clearCells();
-    clearProbs();
-}
-
-async function loadModel(){
-    let modelName = modelNames[modelChosenIndex];
-    session = await ort.InferenceSession.create('../models/' + modelName);
 }
 
 loadModel()
@@ -89,6 +83,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+async function loadModel(){
+    let modelName = modelNames[modelChosenIndex];
+    session = await ort.InferenceSession.create('../models/' + modelName);
+}
 
 function clearCells(){
     const cells = document.querySelectorAll('.cell');
@@ -96,6 +94,7 @@ function clearCells(){
     cells.forEach((cell) => {
         cell.style.backgroundColor = "white";
     });
+    clearProbs();
 }
 
 function clearProbs(){
@@ -121,18 +120,15 @@ function softmax(arr) {
     return exps.map(x => x/sumExps);
 }
 
-// i used black on white background, the other models the did opposite
 function getGridValues(mine){
-    let blackValue = mine ? 0 : 255;
-    let whiteValue = mine ? 0.0039 : 0;
-
+    let bgValue = mine ? 0 : 255;
+    let digitValue = mine ? 0.0039 : 0;
     const cells = document.getElementsByClassName('cell');
     const pixelValues = new Float32Array(28*28);
     for (let i = 0; i < cells.length; i++) {
         const cellColor = cells[i].style.backgroundColor;
-        pixelValues[i] = cellColor === 'white' ? whiteValue : blackValue;
+        pixelValues[i] = cellColor === 'white' ? bgValue : digitValue;
     }
-
     return pixelValues;
 }
 
