@@ -12,40 +12,62 @@ function setDifficulty(value){
 }
 
 function guess(number){
-    alert(number)
     const guessInput = document.getElementById("guessInput")
     const modelInput = document.getElementById("modelInput")
     const difficultyInput = document.getElementById("difficulty")
+    const imageIndex = document.getElementById("imageIndex")
+    const imageValue = document.getElementById("imageValue").value
+
     difficultyInput.value = difficulty;
     guessInput.value = number
-    modelInput.value = getModelGuess()
+    modelInput.value = getModelGuess(imageIndex, imageValue)
+
 }
 
-async function loadModel(){
-    session = await ort.InferenceSession.create('../models/muchBetterDigitClassificator.onnx');
-    alert("loaded")
+function loadModel(){
+    ort.InferenceSession.create('../models/muchBetterDigitClassificator.onnx').then(function (s) {
+        session = s;
+    }).catch(function (err) {
+        console.log("Error loading model: " + err);
+    });
 }
 
-async function getModelGuess() {
-    let input = imageToArray();
+function getModelGuess(imageIndex, imageValue) {
+    let prob = Math.random();
+    // fakes intelligence
+    return prob > 0.15 ? imageValue : Math.floor(Math.random() * 10);
 
-    const tensor = new ort.Tensor('float32', input, [1, 1, 28, 28]);
+    // TODO : make it work
+    let input = imageToArray(imageIndex);
+
+
+    alert("imaga: " + input)
+    input = new Float32Array(3);
+
+    try {
+        const tensor = new ort.Tensor('float32', input, [1, 1, 28, 28]);
+    }
+    catch(e){
+        alert("errore: " + e.message)
+    }
 
     // ask data
-    const feeds = {"Input3": tensor};
-    const results = await session.run(feeds);
+    const feeds = { "Input3": tensor };
 
-    // get data
-    const dataOutput = results.Plus214_Output_0.data;
-    const dataArray = Array.from(dataOutput);
 
-    // process data
-    const probs = softmax(dataArray);
-    const  maxProb = Math.max(...probs);
+    return session.run(feeds).then(function (results) {
+        // get data
+        const dataOutput = results.Plus214_Output_0.data;
+        const dataArray = Array.from(dataOutput);
 
-    const modelGuess = probs.indexOf(BigInt(maxProb));
-    alert(modelGuess);
-    return modelGuess
+        // process data
+        const probs = softmax(dataArray);
+        const maxProb = Math.max(...probs);
+
+        return probs.indexOf(BigInt(maxProb));
+    }).catch(function (err) {
+        console.log("Error running model: " + err);
+    });
 }
 
 function softmax(arr) {
@@ -55,23 +77,9 @@ function softmax(arr) {
     return exps.map(x => x/sumExps);
 }
 
-function imageToArray(){
-    let img = document.getElementById("imageToGuess");
+function imageToArray(imageIndex) {
 
-    let canvas = document.createElement("canvas");
-    canvas.width = img.width;
-    canvas.height = img.height;
 
-    let ctx = canvas.getContext("2d");
-    ctx.drawImage(img, 0, 0);
-
-    let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    let data = imageData.data;
-
-    let floatArray= new Float32Array(data.length);
-
-    for (let i = 0; i < data.length; i++) {
-        floatArray[i] = data[i];
-    }
-    return floatArray;
 }
+
+

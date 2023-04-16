@@ -106,6 +106,7 @@ function renderForm($usError, $pwError, $username, $pw): void
                             <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
                                 <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Accedi</p>
+                                <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href="register.php">Non hai un account?</a></p>
 
                                 <form class="mx-1 mx-md-4" method="POST" action="#">
 
@@ -129,13 +130,14 @@ function renderForm($usError, $pwError, $username, $pw): void
                                             <label class="form-label" for="form3Example4cd"
                                                    style="color: red;"><?php echo $pwError; ?></label>
                                             <label class="form-label" for="form3Example4c">Password</label>
-
                                         </div>
                                     </div>
 
                                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                                         <input type="submit" class="btn btn-primary btn-lg" value="Accedi"></input>
                                     </div>
+
+
 
                                 </form>
 

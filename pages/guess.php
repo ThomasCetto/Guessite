@@ -32,24 +32,48 @@ $timestamp = time();
 
 <body>
 <?php
+
+if(!isset($_SESSION["username"])){
+    ?>
+    <h3>Devi accedere per poter provare le sfide! <br><a href="login.php">Accedi qui!</a></h3>
+
+    <?php
+    return;
+
+}
+
 // image of the current page
 $indexChosen = rand(0, 10000);
 $points = -5;
 
+
 // TODO: change image selection and points when difficulty is higher
 
+
+
+// loads the labels if didn't already
+if(!isset($_SESSION["labels"])){
+    $file_contents = file('../dataset/labels.txt');
+    $numbers_array = [];
+    foreach ($file_contents as $line) {
+        $numbers_array[] = trim($line);
+    }
+    $_SESSION["labels"] = $numbers_array;
+}
+
 // the user chose a number before
-if(isset($_POST["guessInput"])){
+if(isset($_POST["guessValue"])){
     //if the user guessed right
-    if(htmlspecialchars($_POST["guessInput"]) === htmlspecialchars($_POST["imageIndex"])){
+    if(htmlspecialchars($_POST["guessValue"]) === htmlspecialchars($_POST["imageValue"])){
         $points += 10;
     }
     // if the model guessed right
-    if(htmlspecialchars($_POST["modelInput"]) === htmlspecialchars($_POST["imageIndex"])){
-        $points -= 2;
+    if(htmlspecialchars($_POST["modelValue"]) === htmlspecialchars($_POST["imageValue"])){
+        $points -= 3;
     }
     addPoints($db_conn, $points);
-    echo "Added $points points";
+
+    // TODO: somway make an animation that tells how many points you got
 }
 
 include "../components/navbar.php";
@@ -66,7 +90,6 @@ include "../components/navbar.php";
 
             </div>
         </div>
-
 
         <!-- right -->
         <div id="right-container" class="col-md-6">
@@ -85,6 +108,7 @@ include "../components/navbar.php";
                     <input type="text" style="display: none" name="guessValue" id="guessInput">
                     <input type="text" style="display: none" name="modelValue" id="modelInput">
                     <input type="text" style="display: none" name="imageIndex" id="imageIndex" value="<?php echo $indexChosen;?>">
+                    <input type="text" style="display: none" name="imageValue" id="imageValue" value="<?php echo $_SESSION["labels"][$indexChosen];?>">
                     <input type="text" style="display: none" name="difficulty" id="difficulty">
 
 

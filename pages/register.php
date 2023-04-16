@@ -108,6 +108,8 @@ function renderForm($usError, $emailError, $pwError, $termsError, $username, $em
 
                                 <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Registrati</p>
 
+                                <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href="login.php">Già registrato?</a></p>
+
                                 <form class="mx-1 mx-md-4" method="POST" action="#">
 
                                     <div class="d-flex flex-row align-items-center mb-4">
@@ -163,6 +165,7 @@ function renderForm($usError, $emailError, $pwError, $termsError, $username, $em
                                                 services</label>
                                         </label>
                                     </div>
+
 
                                     <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                                         <input type="submit" class="btn btn-primary btn-lg" value="Registrati"></input>
