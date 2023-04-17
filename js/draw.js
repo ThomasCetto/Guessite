@@ -8,7 +8,7 @@ let brushSize = 3;
 const cells = document.querySelectorAll('.cell');
 const resultContainer = document.getElementById("results");
 let session = null;
-let modelNames = ["SimpleCNNDigitModel4.onnx", "muchBetterDigitClassificator.onnx"];
+let modelNames = ["SimpleCNNDigitModel2.onnx", "muchBetterDigitClassificator.onnx"];
 let inputNames = ["input.1", "Input3"]
 let outputNames = ["outputName", "Plus214_Output_0"]
 let modelChosenIndex = 0;
@@ -86,6 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
 async function loadModel(){
     let modelName = modelNames[modelChosenIndex];
     session = await ort.InferenceSession.create('../models/' + modelName);
+    alert('../models/' + modelName + " 4")
 }
 
 function clearCells(){
@@ -121,8 +122,8 @@ function softmax(arr) {
 }
 
 function getGridValues(mine){
-    let bgValue = mine ? 0 : 255;
-    let digitValue = mine ? 0.0039 : 0;
+    let bgValue = mine ? 0.0039 : 0;
+    let digitValue = mine ? 0 : 255;
     const cells = document.getElementsByClassName('cell');
     const pixelValues = new Float32Array(28*28);
     for (let i = 0; i < cells.length; i++) {
