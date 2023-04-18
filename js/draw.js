@@ -86,7 +86,6 @@ document.addEventListener('DOMContentLoaded', function() {
 async function loadModel(){
     let modelName = modelNames[modelChosenIndex];
     session = await ort.InferenceSession.create('../models/' + modelName);
-    alert('../models/' + modelName + " 4")
 }
 
 function clearCells(){
@@ -132,8 +131,6 @@ function getGridValues(mine){
     }
     return pixelValues;
 }
-
-
 
 async function refreshProbs() {
     const input = getGridValues(modelChosenIndex === 0);

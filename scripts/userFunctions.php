@@ -183,9 +183,14 @@ function getPassword($db_conn, $field, $value){
 }
 
 function addPoints($db_conn, $amount){
+    // amount:
+    // > 1 -> + guessed + tried
+    // < 0 -> + tried
+    $addGuessed = $amount > 0 ? 1 : 0;
+
     $query = "
         UPDATE accountStats
-        SET score = score + $amount 
+        SET score = score + $amount, guessed = guessed + $addGuessed, tries = tries + 1
         WHERE username = '" . $_SESSION["username"] . "';
     ";
 

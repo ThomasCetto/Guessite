@@ -1,13 +1,32 @@
 #left-container{
-    background-color: red;
+
 }
 #right-container{
-    background-color: blue;
+    padding: 3%;
 }
 #imageContainer{
-    background-color: orange;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin: 3%;
 }
 #imageToGuess{
-    width: 280px;
-    height: 280px;
+    width: 300px;
+    height: 300px;
+}
+#rowContainer{
+    width: 100%;
+}
+#numbersContainer{
+    padding-left:10%;
+    padding-right:10%;
+
+    width: 50%;
+}
+
+#numbersContainer .row{
+    margin-bottom: 10%;
 }

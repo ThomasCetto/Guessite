@@ -73,27 +73,25 @@ if(isset($_POST["guessValue"])){
     }
     addPoints($db_conn, $points);
 
-    // TODO: somway make an animation that tells how many points you got
+    // TODO: somway make an animation that tells how many points the user got
 }
 
 include "../components/navbar.php";
 ?>
 
 <div id="pageContent">
-    <div class="row">
-
+    <div class="row" id="rowContainer">
         <!-- left -->
         <div class="col-md-6" id="left-container">
             <div class="container border border-primary border-2 rounded p-3" id="imageContainer">
                 <img id="imageToGuess" src="../dataset/images/<?php echo $indexChosen;?>.png" alt="image to guess">
-
-
             </div>
+
         </div>
 
         <!-- right -->
         <div id="right-container" class="col-md-6">
-            <p>Scegli la difficolta:</p>
+            <p>Difficolta:</p>
             <div class="btn-group" role="group" aria-label="Button group">
                 <input onclick=setDifficulty(0) type="radio" class="btn-check" name="options" id="option1" autocomplete="off" checked>
                 <label class="btn btn-primary" for="option1">Facile</label>
@@ -103,7 +101,9 @@ include "../components/navbar.php";
                 <label class="btn btn-primary" for="option3">Difficile</label>
             </div>
 
-            <div id="numbers">
+            <br><br>
+            <p>Che numero vedi?</p>
+            <div id="numbersContainer">
                 <form action="#" method="POST">
                     <input type="text" style="display: none" name="guessValue" id="guessInput">
                     <input type="text" style="display: none" name="modelValue" id="modelInput">
@@ -111,17 +111,47 @@ include "../components/navbar.php";
                     <input type="text" style="display: none" name="imageValue" id="imageValue" value="<?php echo $_SESSION["labels"][$indexChosen];?>">
                     <input type="text" style="display: none" name="difficulty" id="difficulty">
 
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <button class="btn btn-primary w-100" onclick="guess(1)">1</button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-primary w-100" onclick="guess(2)">2</button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-primary w-100" onclick="guess(3)">3</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <button class="btn btn-primary w-100" onclick="guess(4)">4</button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-primary w-100" onclick="guess(5)">5</button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-primary w-100" onclick="guess(6)">6</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <button class="btn btn-primary w-100" onclick="guess(7)">7</button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-primary w-100" onclick="guess(8)">8</button>
+                            </div>
+                            <div class="col">
+                                <button class="btn btn-primary w-100" onclick="guess(9)">9</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <button class="btn btn-primary w-100" onclick="guess(0)">0</button>
+                            </div>
+                        </div>
+                    </div>
 
-                    <input type="submit" value="0" onclick=guess(0)>
-                    <input type="submit" value="1" onclick=guess(1)>
-                    <input type="submit" value="2" onclick=guess(2)>
-                    <input type="submit" value="3" onclick=guess(3)>
-                    <input type="submit" value="4" onclick=guess(4)>
-                    <input type="submit" value="5" onclick=guess(5)>
-                    <input type="submit" value="6" onclick=guess(6)>
-                    <input type="submit" value="7" onclick=guess(7)>
-                    <input type="submit" value="8" onclick=guess(8)>
-                    <input type="submit" value="9" onclick=guess(9)>
                 </form>
             </div>
         </div>
