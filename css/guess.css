@@ -14,8 +14,8 @@
     margin: 3%;
 }
 #imageToGuess{
-    width: 300px;
-    height: 300px;
+    width: 30vw;
+    height: 60vh;
 }
 #rowContainer{
     width: 100%;

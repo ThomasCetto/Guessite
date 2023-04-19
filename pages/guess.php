@@ -102,6 +102,33 @@ include "../components/navbar.php";
             </div>
 
             <br><br>
+
+            <table class="table table-striped tab mx-auto" id="gridRight">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Username</th>
+                    <th>Punteggio</th>
+                    <th>Tentativi</th>
+                    <th>Indovinati</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <?php
+                    $nameToSearchFor = $_SESSION["username"];
+                    $row = getUserFromLeaderboard($db_conn, $nameToSearchFor)
+                    ?>
+                    <td><?php echo $row["pos"];?></td>
+                    <td><?php echo $row["username"];?></td>
+                    <td><?php echo $row["score"];?></td>
+                    <td><?php echo $row["tries"];?></td>
+                    <td><?php echo $row["guessed"];?></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <br><br>
             <p>Che numero vedi?</p>
             <div id="numbersContainer">
                 <form action="#" method="POST">

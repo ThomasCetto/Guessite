@@ -24,6 +24,10 @@
 #titleRow{
     /* padding-top: 30px;  non va*/
 }
+#guessPreview{
+    width: 35vw;
+    height: 40vh;
+}
 .redir{
     margin: 5% 3% 3%;
 }

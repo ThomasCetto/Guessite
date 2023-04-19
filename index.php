@@ -46,11 +46,14 @@ include "components/navbar.php";
 
         <div class="col-md-6" id="right-container">
             <h2>Sfida</h2>
-            <div class="container border border-primary rounded border-2 p-3">
-
-
-                <p>Coming soon...</p>
+            <div class="container border border-primary border-2 rounded p-3">
+                <p>Riesci a battere il computer?</p>
+                <img src="img/guessScreen.png" id="guessPreview" alt="guess screenshot">
             </div>
+
+            <a href="./pages/guess.php">
+                <button class="redir btn btn-primary border border-primary rounded-2 px-4 py-2">Vai!</button>
+            </a>
 
         </div>
     </div>
