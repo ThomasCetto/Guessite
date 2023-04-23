@@ -55,11 +55,17 @@ $timestamp = time();
             if (userExists($db_conn, $username)) {
                 $usError = "Questo username è già stato utilizzato";
                 renderForm($usError, $emailError, $pwError, $termsError, $username, $email);
-            } else if (emailExists($db_conn, $email)) {
+            }else if(strlen($username) > 20){
+                $usError = "L'username può avere massimo 20 caratteri";
+                renderForm($usError, $emailError, $pwError, $termsError, $username, $email);
+            }else if(strlen($email) > 30){
+                $emailError = "La mail può avere massimo 30 caratteri";
+                renderForm($usError, $emailError, $pwError, $termsError, $username, $email);
+            }else if (emailExists($db_conn, $email)) {
                 $emailError = "Questa mail è già stata utilizzata";
                 renderForm($usError, $emailError, $pwError, $termsError, $username, $email);
-            } else if (strlen($pw1) < 1) {  // TODO: 1 -> 8
-                $pwError = "La password deve avere almeno 8 caratteri!";
+            } else if (strlen($pw1) < 1 || strlen($pw1) > 20) {  // TODO: 1 -> 8
+                $pwError = "La password deve avere tra gli 8 e i 20 caratteri!";
                 renderForm($usError, $emailError, $pwError, $termsError, $username, $email);
             } else if ($pw1 !== $pw2) {
                 $pwError = "Le due password sono diverse!";
@@ -131,7 +137,7 @@ function renderForm($usError, $emailError, $pwError, $termsError, $username, $em
                                                    class="form-control" name="email" required/>
                                             <label class="form-label" for="form3Example3c"
                                                    style="color: red;"><?php echo $emailError; ?></label>
-                                            <label class="form-label" for="form3Example3c">Your Email</label>
+                                            <label class="form-label" for="form3Example3c">Email</label>
                                         </div>
                                     </div>
 
@@ -151,19 +157,19 @@ function renderForm($usError, $emailError, $pwError, $termsError, $username, $em
                                                    name="password2" required/>
                                             <label class="form-label" for="form3Example4cd"
                                                    style="color: red;"><?php echo $pwError; ?></label>
-                                            <label class="form-label" for="form3Example4cd">Repeat your password</label>
+                                            <label class="form-label" for="form3Example4cd">Ripeti la password</label>
                                         </div>
                                     </div>
 
                                     <div class="form-check d-flex justify-content-center mb-5">
+
                                         <input class="form-check-input me-2" type="checkbox" value="yes"
                                                id="form2Example3c" name="agree"/>
+
                                         <label class="form-check-label" for="form2Example3">
-                                            <label class="form-label" for="form3Example4cd"
-                                                   style="color: red;"><?php echo $termsError; ?></label>
-                                            <label class="form-label" for="form3Example4cd">Agree to our terms and
-                                                services</label>
+                                            Accetto i termini e le condizioni di servizio
                                         </label>
+                                        <label style="color: red;"><?php echo $termsError; ?></label>
                                     </div>
 
 

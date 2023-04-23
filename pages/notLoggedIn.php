@@ -51,11 +51,10 @@
 </head>
 <body>
 <div class="container mt-5">
-    <h1>About Page</h1>
+    <h1>Devi accedere per usufruire di questo servizio</h1>
     <div class="row mt-4">
         <div class="col-md-6 offset-md-3">
-            <h3>Sito creato da Thomas Cetto</h3>
-            <p>Profilo GitHub: <a href="https://github.com/ThomasCetto">qui</a></p>
+            <h3>Fallo qui: <a href="/pages/login.php">Accedi</a></h3>
         </div>
     </div>
     <div class="row mt-3">

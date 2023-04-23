@@ -44,10 +44,12 @@ $pwChangedMessage = "";
 if (isset($_POST["logout"])) {
     $_SESSION["username"] = null;
     header("Refresh:0; url=../index.php");
+    return;
 }else if(isset($_POST["delete"])){
     deleteUser($db_conn, $_SESSION["username"]);
     $_SESSION["username"] = null;
     header("Refresh:0; url=../index.php");
+    return;
 }else if(isset($_POST["oldpw"]) && isset($_POST["newpw"])){
     $pwChanged = changePassword($db_conn,  $_SESSION["username"], htmlspecialchars($_POST["oldpw"]), htmlspecialchars($_POST["newpw"]));
     $pwChangedMessage = $pwChanged ? " - (La password è stata modificata con successo!)" : "- (Controlla che la password inserita sia corretta)";
