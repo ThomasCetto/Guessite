@@ -72,7 +72,8 @@ function checkLogin($db_conn, $field, $value, $pw): bool
     return strcmp($pwInDatabase, md5($pw)) === 0;
 }
 
-function getEmailFromUsername($db_conn, $username){
+function getEmailFromUsername($db_conn, $username)
+{
     $query = "SELECT email 
               FROM account 
               WHERE username = '" . $username . "';";
@@ -87,18 +88,21 @@ function getEmailFromUsername($db_conn, $username){
     return "Error";
 }
 
-function deleteUser($db_conn, $username){
+function deleteUser($db_conn, $username)
+{
     $query = "DELETE FROM account WHERE username = '" . $username . "';";
+    $query2 = "DELETE FROM accountStats WHERE username = '" . $username . "';";
 
     try {
         $data = mysqli_query($db_conn, $query);
-        $row = mysqli_fetch_assoc($data);
-        echo "Fatto bruh";
+        $data2 = mysqli_query($db_conn, $query2);
     } catch (Exception $e) {
         echo "Errore in deleteUser " . $e->getMessage();
     }
 }
-function getLeaderboard($db_conn, $howMany){
+
+function getLeaderboard($db_conn, $howMany)
+{
     $query = "
         SELECT ROW_NUMBER() OVER (ORDER BY s.score DESC) AS pos, 
            a.username, 
@@ -117,7 +121,8 @@ function getLeaderboard($db_conn, $howMany){
     return null;
 }
 
-function getUserFromLeaderboard($db_conn, $username){
+function getUserFromLeaderboard($db_conn, $username)
+{
     $query = "
         SELECT pos, username, score, tries, guessed
         FROM (
@@ -144,11 +149,11 @@ function getUserFromLeaderboard($db_conn, $username){
 
 function changePassword($db_conn, $username, $old, $new): bool
 {
-    if(strlen($new) <= 1) return false;
+    if (strlen($new) <= 1) return false;
 
     $pwInDatabase = getPassword($db_conn, "username", $username);
     // if the user inputs the old password wrong it doesn't do anything
-    if(strcmp($pwInDatabase, md5($old)) !== 0) return false;
+    if (strcmp($pwInDatabase, md5($old)) !== 0) return false;
 
     $query = "
         UPDATE account
@@ -166,7 +171,8 @@ function changePassword($db_conn, $username, $old, $new): bool
     return false;
 }
 
-function getPassword($db_conn, $field, $value){
+function getPassword($db_conn, $field, $value)
+{
     $query = "SELECT * 
               FROM account 
               WHERE " . $field . " = '" . $value . "';";
@@ -182,7 +188,8 @@ function getPassword($db_conn, $field, $value){
     return null;
 }
 
-function addPoints($db_conn, $amount){
+function addPoints($db_conn, $amount)
+{
     // amount:
     // > 1 -> + guessed + tried
     // < 0 -> + tried
@@ -199,4 +206,61 @@ function addPoints($db_conn, $amount){
     } catch (Exception $e) {
         echo "Errore in addPoints -> " . $e->getMessage();
     }
+}
+
+function printLeaderboard($db_conn, $howMany, $admin)
+{
+    ?>
+    <table class="table table-striped tab mx-auto" id="gridLeft">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Username</th>
+            <th>Punteggio</th>
+            <th>Tentativi</th>
+            <th>Indovinati</th>
+            <?php
+            if ($admin) {
+                ?>
+                <th>Eliminazione</th>
+                <?php
+            }
+            ?>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+
+
+        $result = getLeaderboard($db_conn, $howMany);
+        // for each user, add a row
+        while ($row = $result->fetch_assoc()) {
+            ?>
+            <tr>
+                <td><?php echo $row["pos"]; ?></td>
+                <td><?php echo $row["username"]; ?></td>
+                <td><?php echo $row["score"]; ?></td>
+                <td><?php echo $row["tries"]; ?></td>
+                <td><?php echo $row["guessed"]; ?></td>
+
+                <?php
+                if ($admin) {
+                    ?>
+                    <td>
+                        <form action="administrator.php" method="POST">
+                            <input type="hidden" name="username" value="<?php echo $row["username"]; ?>">
+                            <input type="button" class="btn btn-danger" value="Elimina" onclick=toggleDelete(this)>
+                        </form>
+                    </td>
+
+                    <?php
+                }
+                ?>
+            </tr>
+            <?php
+        }
+        ?>
+        </tbody>
+    </table>
+    <?php
 }

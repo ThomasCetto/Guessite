@@ -1,14 +1,15 @@
 <style>
     .navbar-bg {
-        background: rgb(150,150,255);
-        background: linear-gradient(90deg, rgba(150,150,255,1) 0%, rgba(0,212,255,1) 100%);
+        background: rgb(150, 150, 255);
+        background: linear-gradient(90deg, rgba(150, 150, 255, 1) 0%, rgba(0, 212, 255, 1) 100%);
     }
 
     .logo {
         width: 75%;
         height: 90%;
     }
-    #logoContainer{
+
+    #logoContainer {
         width: 60px;
         height: 60px;
         margin-left: 15px;
@@ -43,7 +44,7 @@
                     <a class="fs-3 nav-link" href="/pages/guess.php">Sfida | </a>
                 </li>
                 <li class="nav-item">
-                    <a class="fs-3 nav-link" href="/pages/users.php">Utenti </a>
+                    <a class="fs-3 nav-link" href="/pages/users.php">Classifica </a>
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -54,8 +55,19 @@
                 if (isset($_SESSION["username"])) {
                     ?>
                     <li class="nav-item">
-                        <a class="fs-4 nav-link" href="/pages/profile.php"><?php echo $_SESSION["username"] ?></a>
+                        <a class="fs-4 nav-link" href="/pages/profile.php"><?php echo $_SESSION["username"]; ?></a>
                     </li>
+                    <?php
+                    if ($_SESSION["username"] == "admin") {
+                        ?>
+                        <li class="nav-item">
+                            <a class="fs-4 nav-link" href="/pages/administrator.php">| Area amministratore</a>
+                        </li>
+                        <?php
+                    }
+                    ?>
+
+
                     <?php
                 } else {
                     ?>

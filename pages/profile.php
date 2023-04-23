@@ -34,6 +34,11 @@ include "../components/navbar.php";
 
 <?php
 
+if(!isset($_SESSION["username"])){
+    header("Refresh:0; url=../index.php");
+    return;
+}
+
 $pwChangedMessage = "";
 
 if (isset($_POST["logout"])) {
@@ -48,6 +53,13 @@ if (isset($_POST["logout"])) {
     $pwChangedMessage = $pwChanged ? " - (La password è stata modificata con successo!)" : "- (Controlla che la password inserita sia corretta)";
 }
 
+$userData = getUserFromLeaderboard($db_conn, $_SESSION["username"]);
+$score = $userData["score"];
+$tries = $userData["tries"];
+$guessed = $userData["guessed"];
+$position = $userData["pos"];
+
+
 
 ?>
 
@@ -57,9 +69,19 @@ if (isset($_POST["logout"])) {
 <div id="pageContent">
 
     <div class="container border border-primary rounded p-3" id="information">
-        <p id="title">Dati utente</p>
+        <p class="title">Dati utente</p>
         <p class="txt"><strong>Username:&nbsp&nbsp&nbsp</strong><?php echo $_SESSION["username"];?> </p>
-        <p class="txt"><strong>Email:&nbsp&nbsp&nbsp</strong> <?php echo getEmailFromUsername($db_conn, $_SESSION["username"])?> </p>
+        <p class="txt"><strong>Email:&nbsp&nbsp&nbsp</strong> <?php echo getEmailFromUsername($db_conn, $_SESSION["username"]);?> </p>
+
+        <br>
+        <p class="title">Statistiche</p>
+        <p class="txt"><strong>Posizione:&nbsp&nbsp&nbsp</strong><?php echo $position;?>°</p>
+        <p class="txt"><strong>Punteggio:&nbsp&nbsp&nbsp</strong> <?php echo $score;?> </p>
+        <p class="txt"><strong>Immagini indovinate:&nbsp&nbsp&nbsp</strong> <?php echo $guessed;?> </p>
+        <p class="txt"><strong>Immagini tentate:&nbsp&nbsp&nbsp</strong> <?php echo $tries; ?> </p>
+
+        <br>
+        <p class="title">Gestione utente</p>
         <p class="txt"><strong>Modifica password <?php echo $pwChangedMessage;?> </strong></p>
         <form action="#" method="POST">
             <input class="pwInput" type="password" name="oldpw" placeholder="Vecchia password..." required><br>
@@ -77,10 +99,6 @@ if (isset($_POST["logout"])) {
         <input name="delete" style="display:none;">
         <button id="deleteButton" type="button" class="btn btn-danger border border-danger rounded-3 px-4 py-2" onclick="toggleDelete()">Elimina account</button>
     </form>
-
-
-
-
 
 </div>
 

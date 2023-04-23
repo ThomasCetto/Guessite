@@ -35,35 +35,7 @@ $timestamp = time();
     <div id="pageContent">
         <div class="col-md-6" id="left-container">
             <h1>Classifica</h1>
-
-            <table class="table table-striped tab mx-auto" id="gridLeft">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Username</th>
-                        <th>Punteggio</th>
-                        <th>Tentativi</th>
-                        <th>Indovinati</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <?php
-                $result = getLeaderboard($db_conn, 10);
-                // for each user, add a row
-                while ($row = $result->fetch_assoc()) {
-                    ?>
-                    <tr>
-                        <td><?php echo $row["pos"];?></td>
-                        <td><?php echo $row["username"];?></td>
-                        <td><?php echo $row["score"];?></td>
-                        <td><?php echo $row["tries"];?></td>
-                        <td><?php echo $row["guessed"];?></td>
-                    </tr>
-                <?php
-                }
-                ?>
-                </tbody>
-            </table>
+            <?php printLeaderboard($db_conn, 10, false); ?>
         </div>
 
         <div class="vertical-line"></div>
