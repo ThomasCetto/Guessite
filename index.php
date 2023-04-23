@@ -27,36 +27,59 @@ include "components/navbar.php";
 
 
 <div id="pageContent">
-    <div class="row" id="titleRow">
-        <h1 class="col text-center" id="title">Modalità</h1>
-    </div>
     <div class="row">
-        <div class="col-md-6" id="left-container">
-            <h2>Disegno</h2>
-            <div class="container border border-primary border-2 rounded p-3">
-                <p>Sfida l'Intelligenza Artificiale!</p>
-                <img src="img/numberGrid.png" alt="number grid">
-                <img src="img/numberGuess.png" alt="number guess">
-            </div>
+        <div id="left-container" class="col">
+            <a href="/pages/draw.php">
+                <div class="square">
+                    <h3>Disegna</h3>
 
-            <a href="./pages/draw.php">
-                <button class="redir btn btn-primary border border-primary rounded-2 px-4 py-2">Vai!</button>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="logo-holder">
+                                <div id="barsContainer">
+                                    <div class="bg"></div>
+                                    <div class="bar"></div>
+                                    <div class="bar fill1"></div>
+                                    <div class="bar fill2"></div>
+                                    <div class="bar fill3"></div>
+                                    <div class="bar fill4"></div>
+                                    <div class="bar fill1"></div>
+                                    <div class="bar fill5"></div>
+                                    <div class="bar fill6"></div>
+                                    <div class="bar"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6" id="gifHolder">
+                            <img id="gif" src="img/drawVideo.gif" alt="drawing gif">
+                        </div>
+                    </div>
+                </div>
             </a>
         </div>
 
-        <div class="col-md-6" id="right-container">
-            <h2>Sfida</h2>
-            <div class="container border border-primary border-2 rounded p-3">
-                <p>Riesci a battere il computer?</p>
-                <img src="img/guessScreen.png" id="guessPreview" alt="guess screenshot">
-            </div>
+        <div id="right-container" class="col">
+            <a href="/pages/guess.php">
+                <div class="square">
+                    <h3>
+                        Sfida
+                    </h3>
 
-            <a href="./pages/guess.php">
-                <button class="redir btn btn-primary border border-primary rounded-2 px-4 py-2">Vai!</button>
+                </div>
             </a>
-
         </div>
     </div>
+
+
+
+
+
+
+
+
+
+
+
 </div>
 
 
