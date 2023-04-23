@@ -90,12 +90,13 @@ function getEmailFromUsername($db_conn, $username)
 
 function deleteUser($db_conn, $username)
 {
-    $query = "DELETE FROM account WHERE username = '" . $username . "';";
+    $query1 = "DELETE FROM account WHERE username = '" . $username . "';";
     $query2 = "DELETE FROM accountStats WHERE username = '" . $username . "';";
 
     try {
-        $data = mysqli_query($db_conn, $query);
-        $data2 = mysqli_query($db_conn, $query2);
+        mysqli_query($db_conn, $query1);
+        mysqli_query($db_conn, $query2);
+
     } catch (Exception $e) {
         echo "Errore in deleteUser " . $e->getMessage();
     }
@@ -208,7 +209,87 @@ function addPoints($db_conn, $amount)
     }
 }
 
-function printLeaderboard($db_conn, $howMany, $admin)
+function modifyUser($db_conn, $oldUsername, $newUsername, $newScore, $newTries, $newGuessed){
+    $query1 = "
+        UPDATE accountStats
+        SET username = '" . $newUsername . "', score = " . $newScore . ", tries = " . $newTries . ", guessed = " . $newGuessed . "
+        WHERE username = '" . $oldUsername . "';
+    ";
+    $query2 = "
+        UPDATE account
+        SET username = '" . $newUsername . "', stats = '" . $newUsername . "'
+        WHERE username = '" . $oldUsername . "';
+    ";
+
+    try {
+        mysqli_query($db_conn, $query1);
+        mysqli_query($db_conn, $query2);
+    } catch (Exception $e) {
+        echo "Errore in modifyUser -> " . $e->getMessage();
+    }
+}
+
+function printLeaderboardForAdmin($db_conn, $howMany)
+{
+    ?>
+    <form action="/pages/administrator.php" method="POST">
+        <input id="usernameToModifyField" type="hidden" name="usernameToModify">
+        <input id="usernameToDeleteField" type="hidden" name="usernameToDelete">
+
+        <table class="table table-striped tab mx-auto">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Username</th>
+                <th>Punteggio</th>
+                <th>Tentativi</th>
+                <th>Indovinati</th>
+                <th>Modifica</th>
+                <th>Eliminazione</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+
+            $result = getLeaderboard($db_conn, $howMany);
+            // for each user, add a row
+            while ($row = $result->fetch_assoc()) {
+                ?>
+                <tr>
+                    <td><?php echo $row["pos"]; ?></td>
+                    <td>
+                        <div class="row<?php echo $row["pos"]; ?>"><?php echo $row["username"]; ?></div>
+                    </td>
+                    <td>
+                        <div class="row<?php echo $row["pos"]; ?>"><?php echo $row["score"]; ?></div>
+                    </td>
+                    <td>
+                        <div class="row<?php echo $row["pos"]; ?>"><?php echo $row["tries"]; ?></div>
+                    </td>
+                    <td>
+                        <div class="row<?php echo $row["pos"]; ?>"><?php echo $row["guessed"]; ?></div>
+                    </td>
+
+                    <td>
+                        <input type="button" class="btn btn-success modifyButton" value="Modifica"
+                               onclick=toggleModify(this,<?php echo $row["pos"]; ?>,"<?php echo $row["username"];?>")>
+                    </td>
+
+                    <td>
+                        <input type="button" class="btn btn-danger" value="Elimina"
+                               onclick=toggleDelete(this,<?php echo $row["pos"]; ?>,"<?php echo $row["username"];?>")>
+                    </td>
+                </tr>
+                <?php
+            }
+            ?>
+            </tbody>
+        </table>
+    </form>
+    <?php
+}
+
+function printLeaderboard($db_conn, $howMany)
 {
     ?>
     <table class="table table-striped tab mx-auto" id="gridLeft">
@@ -219,13 +300,6 @@ function printLeaderboard($db_conn, $howMany, $admin)
             <th>Punteggio</th>
             <th>Tentativi</th>
             <th>Indovinati</th>
-            <?php
-            if ($admin) {
-                ?>
-                <th>Eliminazione</th>
-                <?php
-            }
-            ?>
         </tr>
         </thead>
         <tbody>
@@ -242,20 +316,6 @@ function printLeaderboard($db_conn, $howMany, $admin)
                 <td><?php echo $row["score"]; ?></td>
                 <td><?php echo $row["tries"]; ?></td>
                 <td><?php echo $row["guessed"]; ?></td>
-
-                <?php
-                if ($admin) {
-                    ?>
-                    <td>
-                        <form action="administrator.php" method="POST">
-                            <input type="hidden" name="username" value="<?php echo $row["username"]; ?>">
-                            <input type="button" class="btn btn-danger" value="Elimina" onclick=toggleDelete(this)>
-                        </form>
-                    </td>
-
-                    <?php
-                }
-                ?>
             </tr>
             <?php
         }

@@ -10,17 +10,18 @@ CREATE TABLE accountStats
     score INT NOT NULL DEFAULT 0,
     tries   INT NOT NULL DEFAULT 0,
     guessed INT NOT NULL DEFAULT 0
-) ENGINE = INNODB;
+) ENGINE = InnoDB;
 
 CREATE TABLE account
 (
     username VARCHAR(20) PRIMARY KEY,
-    pw       VARCHAR(20) NOT NULL,
+    pw       VARCHAR(40) NOT NULL,
     email    VARCHAR(30) NOT NULL,
     stats    VARCHAR(20) NOT NULL,
-
-    FOREIGN KEY (username) REFERENCES accountStats (username)
+    FOREIGN KEY (stats) REFERENCES accountStats (username)
         ON DELETE CASCADE
+        ON UPDATE CASCADE
+
 ) ENGINE = InnoDB;
 
 CREATE TABLE imageStats

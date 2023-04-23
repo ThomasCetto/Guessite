@@ -35,7 +35,7 @@ $timestamp = time();
     <div id="pageContent">
         <div class="col-md-6" id="left-container">
             <h1>Classifica</h1>
-            <?php printLeaderboard($db_conn, 10, false); ?>
+            <?php printLeaderboard($db_conn, 10); ?>
         </div>
 
         <div class="vertical-line"></div>

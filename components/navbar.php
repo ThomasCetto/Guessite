@@ -53,19 +53,19 @@
                 </li>
                 <?php
                 if (isset($_SESSION["username"])) {
-                    ?>
-                    <li class="nav-item">
-                        <a class="fs-4 nav-link" href="/pages/profile.php"><?php echo $_SESSION["username"]; ?></a>
-                    </li>
-                    <?php
                     if ($_SESSION["username"] == "admin") {
                         ?>
                         <li class="nav-item">
-                            <a class="fs-4 nav-link" href="/pages/administrator.php">| Area amministratore</a>
+                            <a class="fs-4 nav-link" href="/pages/administrator.php">Area amministratore | </a>
                         </li>
                         <?php
                     }
                     ?>
+
+                    <li class="nav-item">
+                        <a class="fs-4 nav-link" href="/pages/profile.php"><?php echo $_SESSION["username"]; ?></a>
+                    </li>
+
 
 
                     <?php
