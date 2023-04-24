@@ -51,7 +51,7 @@ include "components/navbar.php";
                             </div>
                         </div>
                         <div class="col-md-6" id="gifHolder">
-                            <img id="gif" src="img/drawVideo.gif" alt="drawing gif">
+                            <img id="gif" src="img/drawGIF2.gif" alt="drawing gif">
                         </div>
                     </div>
                 </div>

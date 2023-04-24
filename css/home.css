@@ -36,7 +36,7 @@ a{
     color: white;
 }
 #gif{
-    height: 80%;
+    height: 75%;
     width: 80%;
 
     margin-top: 7%;
@@ -44,6 +44,12 @@ a{
 
     border-radius: 20px;
     background-color: #007bff;
+
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
 
 
@@ -112,52 +118,52 @@ a{
 }
 
 @keyframes fill {
-    0%   { width: 0; }
-    33%  { width: 30px;}
-    66%  { width: 10px;}
+    0%   { width: 100px; }
+    33%  { width: 70px;}
+    66%  { width: 50px;}
     100% { width: 105px; }
 }
 
 @keyframes fill-1 {
-    0%   { width: 0; }
+    0%   { width: 30px; }
     33%  { width: 50px;}
-    66%  { width: 20px;}
-    100% { width: 130px; }
+    66%  { width: 110px;}
+    100% { width: 40px; }
 }
 
 @keyframes fill-2 {
-    0%   { width: 0; }
+    0%   { width: 20px; }
     33%  { width: 90px;}
-    66%  { width: 70px;}
-    100% { width: 136px; }
+    66%  { width: 120px;}
+    100% { width: 70px; }
 }
 
 @keyframes fill-3 {
-    0%   { width: 0; }
-    33%  { width: 50px;}
-    66%  { width: 24px;}
-    100% { width: 109px; }
+    0%   { width: 50px; }
+    33%  { width: 20px;}
+    66%  { width: 5px;}
+    100% { width: 30px; }
 }
 
 @keyframes fill-4 {
-    0%   { width: 0; }
-    33%  { width: 98px;}
-    66%  { width: 34px;}
-    100% { width: 99px; }
+    0%   { width: 90px; }
+    33%  { width: 40px;}
+    66%  { width: 80px;}
+    100% { width: 140px; }
 }
 
 @keyframes fill-5 {
-    0%   { width: 0; }
-    33%  { width: 30px;}
-    66%  { width: 10px;}
-    100% { width: 148px; }
+    0%   { width: 30px; }
+    33%  { width: 70px;}
+    66%  { width: 100px;}
+    100% { width: 40px; }
 }
 
 
 @keyframes fill-6 {
-    0%   { width: 0; }
-    33%  { width: 48px;}
-    66%  { width: 22px;}
+    0%   { width: 60px; }
+    33%  { width: 20px;}
+    66%  { width: 45px;}
     100% { width: 140px; }
 }
 
