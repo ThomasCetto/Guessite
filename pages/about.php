@@ -14,6 +14,11 @@ if (session_status() == PHP_SESSION_NONE) {
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/5.0.0-beta2/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/style.css?v=<?php echo $timestamp;?>">
     <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+
         .container {
             width: 80%;
             margin: 0 auto;
