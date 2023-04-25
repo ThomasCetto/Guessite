@@ -9,6 +9,8 @@
 ### Richieste
 - gli utenti possono fare richiesta per entrare nei club
 - i leader possono accettare le richieste degli utenti
+- i club possono essere pieni. La capacità = (livello del club * 5)
+- se un club è pieno avrà le scritte rosse
 
 ### Visualizzazione club
 - si deve poter visualizzare i membri del club, e il leader vede cose in più
