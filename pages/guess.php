@@ -36,7 +36,6 @@ $timestamp = time();
 if(!isset($_SESSION["username"])){
     header("Location: /pages/notLoggedIn.php");
     return;
-
 }
 
 // image of the current page
@@ -70,7 +69,7 @@ if(isset($_POST["guessValue"])){
     }
     addPoints($db_conn, $points);
 
-    // TODO: somway make an animation that tells how many points the user got
+    // TODO: someway make an animation that tells how many points the user got
 }
 
 include "../components/navbar.php";
@@ -114,11 +113,17 @@ include "../components/navbar.php";
                 <tr>
                     <?php
                     $nameToSearchFor = $_SESSION["username"];
-                    $row = getUserFromLeaderboard($db_conn, $nameToSearchFor)
+                    $row = getUserFromLeaderboard($db_conn, $nameToSearchFor);
+
+                    $tellDifference = isset($_POST["guessValue"]);
+                    $previousScore = $row["score"] - $points;
+                    $currentScore = $row["score"];
+                    $pointsToPrint = $points >= 0 ? "+" . $points : $points;
+
                     ?>
                     <td><?php echo $row["pos"];?></td>
                     <td><?php echo $row["username"];?></td>
-                    <td><?php echo $row["score"];?></td>
+                    <td><?php echo $tellDifference ? $previousScore . " (" . $pointsToPrint . ")" . " -> " . $currentScore : $currentScore;?></td>
                     <td><?php echo $row["tries"];?></td>
                     <td><?php echo $row["guessed"];?></td>
                 </tr>

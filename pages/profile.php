@@ -35,7 +35,7 @@ include "../components/navbar.php";
 <?php
 
 if(!isset($_SESSION["username"])){
-    header("Refresh:0; url=../index.php");
+    header("Location: /pages/notLoggedIn.php");
     return;
 }
 
