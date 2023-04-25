@@ -1,4 +1,8 @@
 <style>
+    a{
+        overflow: hidden;
+        white-space: nowrap;
+    }
     .navbar-bg {
         background: rgb(150, 150, 255);
         background: linear-gradient(90deg, rgba(150, 150, 255, 1) 0%, rgba(0, 212, 255, 1) 100%);
@@ -21,6 +25,14 @@
         background: radial-gradient(circle, rgba(5,210,251,1) 0%, rgba(110,127,255,1) 81%);
 
     }
+    #clubDropdown{
+        margin-top: 15%;
+    }
+    @media (max-width: 1000px) {
+        #clubDropdown {
+            margin-top: 0;
+        }
+    }
 </style>
 
 <nav class="navbar navbar-bg  navbar-expand-lg bg-body-tertiary sticky-top">
@@ -40,7 +52,7 @@
         </button>
 
         <!-- Left side of the navbar -->
-        <div class="navbar-collapse collapse" id="navbarSupportedContent" style="">
+        <div class="navbar-collapse collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="fs-3 nav-link" aria-current="page" href="/index.php">Home | </a>
@@ -52,7 +64,21 @@
                     <a class="fs-3 nav-link" href="/pages/guess.php">Sfida | </a>
                 </li>
                 <li class="nav-item">
-                    <a class="fs-3 nav-link" href="/pages/users.php">Classifica </a>
+                    <a class="fs-3 nav-link" href="/pages/users.php">Classifica | </a>
+                </li>
+                <li class="nav-item">
+                    <!-- Dropdown -->
+
+                    <div class="dropdown" id="clubDropdown">
+                        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="background-color: blue; color: white;">
+                            Clubs
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Il tuo club</a></li>
+                            <li><a class="dropdown-item" href="/pages/clubsLeaderboard.php">Classifica club</a></li>
+                            <li><a class="dropdown-item" href="#">Bacheca del tuo club</a></li>
+                        </ul>
+                    </div>
                 </li>
             </ul>
 

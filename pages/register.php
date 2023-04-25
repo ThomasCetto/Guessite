@@ -78,6 +78,7 @@ $timestamp = time();
                 $_SESSION["username"] = $username;
                 echo "Ti sei registrato con successo!";
                 header("Refresh:0; url=../index.php");
+                echo "<meta http-equiv=\"refresh\" content=\"0;url=../index.php\">"; // with php it didn't work for some reason
             }
         } else {
             renderForm($usError, $emailError, $pwError, $termsError, $username, $email);

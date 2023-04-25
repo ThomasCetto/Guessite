@@ -36,20 +36,22 @@ include "../components/navbar.php";
 
 if(!isset($_SESSION["username"])){
     header("Location: /pages/notLoggedIn.php");
-    return;
+    echo "<meta http-equiv=\"refresh\" content=\"0;url=/pages/notLoggedIn.php\">"; // with php it didn't work for some reason
+    exit;
 }
 
 $pwChangedMessage = "";
 
 if (isset($_POST["logout"])) {
     $_SESSION["username"] = null;
-    header("Refresh:0; url=../index.php");
-    return;
+    echo "<meta http-equiv=\"refresh\" content=\"0;url=../index.php\">"; // with php it didn't work for some reason
+    exit;
 }else if(isset($_POST["delete"])){
+    echo "Eliminazione dell'account in corso...";
     deleteUser($db_conn, $_SESSION["username"]);
     $_SESSION["username"] = null;
-    header("Refresh:0; url=../index.php");
-    return;
+    echo "<meta http-equiv=\"refresh\" content=\"0;url=../index.php\">"; // with php it didn't work for some reason
+    exit;
 }else if(isset($_POST["oldpw"]) && isset($_POST["newpw"])){
     $pwChanged = changePassword($db_conn,  $_SESSION["username"], htmlspecialchars($_POST["oldpw"]), htmlspecialchars($_POST["newpw"]));
     $pwChangedMessage = $pwChanged ? " - (La password è stata modificata con successo!)" : "- (Controlla che la password inserita sia corretta)";
