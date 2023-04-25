@@ -34,6 +34,13 @@ include "components/navbar.php";
                     <h3>Disegna</h3>
 
                     <div class="row">
+
+                        <!-- GIF -->
+                        <div class="col-md-6" id="gifHolder">
+                            <img id="gif" src="img/drawGIF3.gif" alt="drawing gif">
+                        </div>
+
+                        <!-- Bars animation -->
                         <div class="col-md-6">
                             <div class="logo-holder">
                                 <div id="barsContainer">
@@ -50,9 +57,9 @@ include "components/navbar.php";
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6" id="gifHolder">
-                            <img id="gif" src="img/drawGIF2.gif" alt="drawing gif">
-                        </div>
+
+
+
                     </div>
                 </div>
             </a>
@@ -61,23 +68,31 @@ include "components/navbar.php";
         <div id="right-container" class="col">
             <a href="/pages/guess.php">
                 <div class="square">
-                    <h3>
-                        Sfida
-                    </h3>
+                    <h3>Sfida</h3>
+
+                    <div class="row">
+
+                        <!-- Question mark -->
+                        <div class="col-md-6">
+                            <div id="question-mark-container">
+                                <p class="question-mark"><b>?</b></p>
+                            </div>
+                        </div>
+                        <!-- Calculator -->
+                        <div class="col-md-6">
+                            <div>
+                                <img id="calculator" src="img/calc.png" alt="calculator">
+                            </div>
+                        </div>
+
+                    </div>
+
+
 
                 </div>
             </a>
         </div>
     </div>
-
-
-
-
-
-
-
-
-
 
 
 </div>

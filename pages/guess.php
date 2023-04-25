@@ -34,10 +34,7 @@ $timestamp = time();
 <?php
 
 if(!isset($_SESSION["username"])){
-    ?>
-    <h3>Devi accedere per poter provare le sfide! <br><a href="login.php">Accedi qui!</a></h3>
-
-    <?php
+    header("Location: /pages/notLoggedIn.php");
     return;
 
 }

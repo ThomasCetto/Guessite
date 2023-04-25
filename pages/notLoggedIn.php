@@ -1,11 +1,20 @@
+<?php
+// to refresh the css everytime (Altervista doesn't refresh it otherwise)
+$timestamp = time();
+session_set_cookie_params(30 * 24 * 60 * 60);
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>About</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/5.0.0-beta2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css?v=<?php echo $timestamp;?>">
     <style>
+
         body {
-            background-color: #f8f8f8;
             font-family: Arial, sans-serif;
         }
 
@@ -15,7 +24,7 @@
             padding: 20px;
             background-color: #fff;
             border-radius: 5px;
-            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
         }
 
         h1 {
@@ -51,10 +60,10 @@
 </head>
 <body>
 <div class="container mt-5">
-    <h1>Devi accedere per usufruire di questo servizio</h1>
+    <h1>Devi effettuare l'accesso per usufruire di questo servizio</h1>
     <div class="row mt-4">
         <div class="col-md-6 offset-md-3">
-            <h3>Fallo qui: <a href="/pages/login.php">Accedi</a></h3>
+            <h3>Fallo qui: &nbsp&nbsp&nbsp&nbsp<a href="/pages/login.php">Accedi</a></h3>
         </div>
     </div>
     <div class="row mt-3">

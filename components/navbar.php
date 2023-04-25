@@ -13,25 +13,33 @@
         width: 60px;
         height: 60px;
         margin-left: 15px;
-        border: 1px solid black;
+        border: 1px solid blue;
         border-radius: 4px;
         text-align: center;
+
+        background: rgb(5,210,251);
+        background: radial-gradient(circle, rgba(5,210,251,1) 0%, rgba(110,127,255,1) 81%);
+
     }
 </style>
 
 <nav class="navbar navbar-bg  navbar-expand-lg bg-body-tertiary sticky-top">
     <div class="container-fluid">
+        <!-- Logo -->
         <a class="navbar-brand" href="/index.php">
             <div id="logoContainer">
                 <img src="/img/logo.png" alt="Logo" class="logo d-inline-block align-text-top">
             </div>
-
         </a>
+
+        <!-- Button to open the navbar -->
         <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+
+        <!-- Left side of the navbar -->
         <div class="navbar-collapse collapse" id="navbarSupportedContent" style="">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
@@ -47,6 +55,8 @@
                     <a class="fs-3 nav-link" href="/pages/users.php">Classifica </a>
                 </li>
             </ul>
+
+            <!-- Right side of the navbar -->
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="fs-4 nav-link" href="/pages/about.php">About | </a>
@@ -65,8 +75,6 @@
                     <li class="nav-item">
                         <a class="fs-4 nav-link" href="/pages/profile.php"><?php echo $_SESSION["username"]; ?></a>
                     </li>
-
-
 
                     <?php
                 } else {

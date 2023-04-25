@@ -1,3 +1,11 @@
+html,body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
 #pageContent{
     width: 100%;
     height: 100%;
@@ -9,17 +17,19 @@
     background-color: #007bff;
     border-radius: 35px;
 
-    border: 3px solid #003f88;
-
     text-align: center;
     overflow: hidden;
+    cursor: pointer;
 
-
+    box-shadow: rgba(88, 46, 240, 0.4) 5px 5px, rgba(43, 59, 227, 0.3) 10px 10px;
+    padding: 2%;
 }
 .square:hover{
     background-color: #005cbe;
     transition: 0.4s;
     transform: scale(1.07);
+
+
 
 }
 
@@ -171,4 +181,48 @@ a{
     0% { background-color: #e0d306;}
     50% { background-color: #fff002;}
     100% { background-color: #e1d205;}
+}
+
+
+
+/* Second square*/
+
+
+.question-mark {
+    transform: translate(-50%, -50%);
+    font-size: calc(10vw + 10vh);
+    color: yellow;
+    animation: moveAndScaleQuestionMark 4s infinite ease-in-out;
+    transform-origin: center;
+
+    margin-left: 50%;
+    margin-top: 30%;
+}
+#question-mark-container{
+    width:100%;
+    height:100%;
+
+    text-align: center;
+}
+
+@keyframes moveAndScaleQuestionMark {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg) scale(1); /* Initial position and size */
+    }
+    25% {
+        transform: translate(-50%, -50%) rotate(-10deg) scale(1.1); /* Move left and scale up */
+    }
+    75% {
+        transform: translate(-50%, -50%) rotate(10deg) scale(0.9); /* Move right and scale down */
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(0deg) scale(1); /* Reset position and size */
+    }
+}
+
+#calculator{
+    height: 50%;
+    width: 50%;
+    border-radius: 10px;
+    margin-top: 10%;
 }
