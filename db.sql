@@ -4,6 +4,7 @@ CREATE DATABASE IF NOT EXISTS Guessite DEFAULT CHARACTER SET = utf8;
 
 USE Guessite;
 
+
 CREATE TABLE accountStats
 (
     username VARCHAR(20) PRIMARY KEY,
@@ -23,6 +24,26 @@ CREATE TABLE account
         ON UPDATE CASCADE
 
 ) ENGINE = InnoDB;
+
+
+CREATE TABLE club
+(
+    name VARCHAR(20) PRIMARY KEY,
+    level INT NOT NULL DEFAULT 1
+) ENGINE = InnoDB;
+
+
+ALTER TABLE account
+    ADD COLUMN club VARCHAR(20);
+
+ALTER TABLE club
+    ADD COLUMN owner VARCHAR(20) NOT NULL;
+
+ALTER TABLE account
+    ADD FOREIGN KEY (club) REFERENCES club (name);
+
+ALTER TABLE club
+    ADD FOREIGN KEY (owner) REFERENCES account (username);
 
 CREATE TABLE imageStats
 (
@@ -65,6 +86,8 @@ VALUES ('Sara', 26, 11, 5);
 INSERT INTO accountStats (username, score, tries, guessed)
 VALUES ('Davide', 34, 14, 7);
 INSERT INTO accountStats (username, score, tries, guessed)
+VALUES ('admin', 0, 0, 0);
+INSERT INTO accountStats (username, score, tries, guessed)
 VALUES ('Alessandro', 23, 9, 4);
 INSERT INTO accountStats (username, score, tries, guessed)
 VALUES ('Chiara', 48, 19, 9);
@@ -79,38 +102,57 @@ VALUES ('Elena', 45, 17, 8);
 INSERT INTO accountStats (username, score, tries, guessed)
 VALUES ('Riccardo', 33, 12, 6);
 
+INSERT INTO account (username, email, pw, stats, club)
+VALUES ('Mario', 'mario@gmail.com', MD5('pwpwpw'), 'Mario', NULL);
+INSERT INTO account (username, email, pw, stats, club)
+VALUES ('Francesco', 'francesco@example.com', MD5('securepw123'), 'Francesco', NULL);
+INSERT INTO account (username, email, pw, stats, club)
+VALUES ('Lorenzo', 'lorenzo@example.com', MD5('securepw123'), 'Lorenzo', NULL);
+
+INSERT INTO club (name, owner, level)
+VALUES ('GuessiteOfficial', 'Mario', 1);
+INSERT INTO club (name, owner, level)
+VALUES ('Informatik', 'Lorenzo', 1);
+INSERT INTO club (name, owner, level)
+VALUES ('Watermelon', 'Francesco', 1);
+
+UPDATE account
+SET club = 'GuessiteOfficial'
+WHERE username = 'Mario';
+UPDATE account
+SET club = 'Informatik'
+WHERE username = 'Lorenzo';
+UPDATE account
+SET club = 'Watermelon'
+WHERE username = 'Francesco';
 
 
-INSERT INTO account (username, email, pw, stats)
-VALUES ('Mario', 'mario@gmail.com', MD5('pwpwpw'), 'Mario');
-INSERT INTO account (username, email, pw, stats)
-VALUES ('Luca', 'luca@example.com', MD5('password123'), 'Luca');
-INSERT INTO account (username, email, pw, stats)
-VALUES ('Giulia', 'giulia@example.com', MD5('myp@ssword'), 'Giulia');
-INSERT INTO account (username, email, pw, stats)
-VALUES ('Francesco', 'francesco@example.com', MD5('securepw123'), 'Francesco');
-INSERT INTO account (username, email, pw, stats)
-VALUES ('Simone', 'simone@example.com', MD5('strongpw123'), 'Simone');
-INSERT INTO account (username, email, pw, stats)
-VALUES ('Elisa', 'elisa@example.com', MD5('mypassword'), 'Elisa');
-INSERT INTO account (username, email, pw, stats)
-VALUES ('Giovanni', 'giovanni@example.com', MD5('myp@ssword123'), 'Giovanni');
-INSERT INTO account (username, email, pw, stats)
-VALUES ('Sara', 'sara@example.com', MD5('securepw456'), 'Sara');
-INSERT INTO account (username, email, pw, stats)
-VALUES ('Davide', 'davide@example.com', MD5('strongpw789'), 'Davide');
-INSERT INTO account (username, email, pw, stats)
-VALUES ('Alessandro', 'alessandro@example.com', MD5('mypassword321'), 'Alessandro');
-INSERT INTO account (username, email, pw, stats)
-VALUES ('Chiara', 'chiara@example.com', MD5('myp@ssword'), 'Chiara');
-INSERT INTO account (username, email, pw, stats)
-VALUES ('Lorenzo', 'lorenzo@example.com', MD5('securepw123'), 'Lorenzo');
-INSERT INTO account (username, email, pw, stats)
-VALUES ('Valentina', 'valentina@example.com', MD5('strongpw987'), 'Valentina');
-INSERT INTO account (username, email, pw, stats)
-VALUES ('Gabriele', 'gabriele@example.com', MD5('myp@ssword789'), 'Gabriele');
-INSERT INTO account (username, email, pw, stats)
-VALUES ('Elena', 'elena@example.com', MD5('mypassword123'), 'Elena');
-INSERT INTO account (username, email, pw, stats)
-VALUES ('Riccardo', 'riccardo@example.com', MD5('securepw456'), 'Riccardo');
+INSERT INTO account (username, email, pw, stats, club)
+VALUES ('Luca', 'luca@example.com', MD5('password123'), 'Luca', 'GuessiteOfficial');
+INSERT INTO account (username, email, pw, stats, club)
+VALUES ('Giulia', 'giulia@example.com', MD5('myp@ssword'), 'Giulia', 'GuessiteOfficial');
+INSERT INTO account (username, email, pw, stats, club)
+VALUES ('Simone', 'simone@example.com', MD5('strongpw123'), 'Simone', NULL);
+INSERT INTO account (username, email, pw, stats, club)
+VALUES ('Elisa', 'elisa@example.com', MD5('mypassword'), 'Elisa', NULL);
+INSERT INTO account (username, email, pw, stats, club)
+VALUES ('Giovanni', 'giovanni@example.com', MD5('myp@ssword123'), 'Giovanni', NULL);
+INSERT INTO account (username, email, pw, stats, club)
+VALUES ('admin', 'admin@admin.com', MD5('admin'), 'admin', NULL);
+INSERT INTO account (username, email, pw, stats, club)
+VALUES ('Sara', 'sara@example.com', MD5('securepw456'), 'Sara', NULL);
+INSERT INTO account (username, email, pw, stats, club)
+VALUES ('Davide', 'davide@example.com', MD5('strongpw789'), 'Davide', NULL);
+INSERT INTO account (username, email, pw, stats, club)
+VALUES ('Alessandro', 'alessandro@example.com', MD5('mypassword321'), 'Alessandro', NULL);
+INSERT INTO account (username, email, pw, stats, club)
+VALUES ('Chiara', 'chiara@example.com', MD5('myp@ssword'), 'Chiara', NULL);
+INSERT INTO account (username, email, pw, stats, club)
+VALUES ('Valentina', 'valentina@example.com', MD5('strongpw987'), 'Valentina', 'Informatik');
+INSERT INTO account (username, email, pw, stats, club)
+VALUES ('Gabriele', 'gabriele@example.com', MD5('myp@ssword789'), 'Gabriele', NULL);
+INSERT INTO account (username, email, pw, stats, club)
+VALUES ('Elena', 'elena@example.com', MD5('mypassword123'), 'Elena', NULL);
+INSERT INTO account (username, email, pw, stats, club)
+VALUES ('Riccardo', 'riccardo@example.com', MD5('securepw456'), 'Riccardo', NULL);
 

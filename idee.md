@@ -21,3 +21,7 @@
 - creazione tabella nel db (chat, messaggio)
 - i membri possono scrivere nella bacheca
 - i messaggi del leader sono evidenziati in rosso
+
+### Altro
+- i leader possono cambiare il nome del club
+- un utente non può eliminare il proprio account se appartiene ancora ad un club 
