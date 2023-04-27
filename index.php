@@ -57,9 +57,6 @@ include "components/navbar.php";
                                 </div>
                             </div>
                         </div>
-
-
-
                     </div>
                 </div>
             </a>
@@ -84,17 +81,11 @@ include "components/navbar.php";
                                 <img id="calculator" src="img/calc.png" alt="calculator">
                             </div>
                         </div>
-
                     </div>
-
-
-
                 </div>
             </a>
         </div>
     </div>
-
-
 </div>
 
 

@@ -26,7 +26,6 @@ $timestamp = time();
 </head>
 
 
-
 <body>
 <?php
 include "../components/navbar.php";
@@ -62,9 +61,6 @@ $score = $userData["score"];
 $tries = $userData["tries"];
 $guessed = $userData["guessed"];
 $position = $userData["pos"];
-
-
-
 ?>
 
 
