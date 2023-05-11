@@ -322,12 +322,12 @@ function printLeaderboardForAdmin($db_conn, $howMany)
 
                     <td>
                         <input type="button" class="btn btn-success modifyButton" value="Modifica"
-                               onclick=toggleModify(this,<?php echo $row["pos"]; ?>,"<?php echo $row["username"];?>")>
+                               onclick="toggleModify(this,<?php echo $row["pos"]; ?>,'<?php echo $row["username"];?>')">
                     </td>
 
                     <td>
                         <input type="button" class="btn btn-danger" value="Elimina"
-                               onclick=toggleDelete(this,<?php echo $row["pos"]; ?>,"<?php echo $row["username"];?>")>
+                               onclick="toggleDelete(this,<?php echo $row["pos"]; ?>,'<?php echo $row["username"];?>')">
                     </td>
                 </tr>
                 <?php

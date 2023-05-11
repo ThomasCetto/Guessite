@@ -84,8 +84,13 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 async function loadModel(){
-    let modelName = modelNames[modelChosenIndex];
-    session = await ort.InferenceSession.create('../models/' + modelName);
+    try {
+        let modelName = modelNames[modelChosenIndex];
+        session = await ort.InferenceSession.create('../models/' + modelName);
+    }catch (e) {
+        alert("Errore nel caricamento del modello, ricarica la pagina...");
+    }
+
 }
 
 function clearCells(){

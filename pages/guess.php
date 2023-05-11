@@ -6,6 +6,7 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 include "../scripts/db_connection.php";
 include "../scripts/userFunctions.php";
+include "../scripts/other.php";
 
 // to refresh the css everytime (Altervista doesn't do it otherwise)
 $timestamp = time();
@@ -60,17 +61,19 @@ if(!isset($_SESSION["labels"])){
 // the user chose a number before
 if(isset($_POST["guessValue"])){
     //if the user guessed right
-    if(htmlspecialchars($_POST["guessValue"]) === htmlspecialchars($_POST["imageValue"])){
+    
+    if(htmlspecialchars($_POST["guessValue"]) === htmlspecialchars($_SESSION["labels"][$_SESSION["indexChosen"]])){
         $points += 10;
     }
     // if the model guessed right
-    if(htmlspecialchars($_POST["modelValue"]) === htmlspecialchars($_POST["imageValue"])){
+    if(htmlspecialchars($_POST["modelValue"]) === htmlspecialchars($_SESSION["labels"][$_SESSION["indexChosen"]])){
         $points -= 3;
     }
     addPoints($db_conn, $points);
 
     // TODO: someway make an animation that tells how many points the user got
 }
+$_SESSION["indexChosen"] = $indexChosen;
 
 include "../components/navbar.php";
 ?>
@@ -81,6 +84,7 @@ include "../components/navbar.php";
         <div class="col-md-6" id="left-container">
             <div class="container border border-primary border-2 rounded p-3" id="imageContainer">
                 <img id="imageToGuess" src="../dataset/images/<?php echo $indexChosen;?>.png" alt="image to guess">
+                <div id="imagePixels">elaaaaa: <?php echo imageToArray("../dataset/images/<?php echo $indexChosen;?>.png");?></div>
             </div>
 
         </div>
@@ -136,8 +140,6 @@ include "../components/navbar.php";
                 <form action="#" method="POST">
                     <input type="text" style="display: none" name="guessValue" id="guessInput">
                     <input type="text" style="display: none" name="modelValue" id="modelInput">
-                    <input type="text" style="display: none" name="imageIndex" id="imageIndex" value="<?php echo $indexChosen;?>">
-                    <input type="text" style="display: none" name="imageValue" id="imageValue" value="<?php echo $_SESSION["labels"][$indexChosen];?>">
                     <input type="text" style="display: none" name="difficulty" id="difficulty">
 
                     <div class="container">

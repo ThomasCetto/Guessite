@@ -18,12 +18,13 @@ function guess(number){
     const guessInput = document.getElementById("guessInput")
     const modelInput = document.getElementById("modelInput")
     const difficultyInput = document.getElementById("difficulty")
-    const imageIndex = document.getElementById("imageIndex")
-    const imageValue = document.getElementById("imageValue").value
+
 
     difficultyInput.value = difficulty;
     guessInput.value = number
-    modelInput.value = getModelGuess(imageIndex, imageValue)
+    modelInput.value = getModelGuess()
+
+
 
 }
 
@@ -35,16 +36,14 @@ function loadModel(){
     });
 }
 
-function getModelGuess(imageIndex, imageValue) {
-    let prob = Math.random();
-    // fakes intelligence
-    return prob > 0.15 ? imageValue : Math.floor(Math.random() * 10);
+function getModelGuess() {
+
 
     // TODO : make it work
-    let input = imageToArray(imageIndex);
+    let input = imageToArray();
 
 
-    alert("imaga: " + input)
+    alert("image: " + input)
     input = new Float32Array(3);
 
     try {
@@ -71,6 +70,7 @@ function getModelGuess(imageIndex, imageValue) {
     }).catch(function (err) {
         console.log("Error running model: " + err);
     });
+    return 0;
 }
 
 function softmax(arr) {
@@ -80,9 +80,43 @@ function softmax(arr) {
     return exps.map(x => x/sumExps);
 }
 
-function imageToArray(imageIndex) {
+function imageToArray() {
+// Assuming you have an <input type="file"> element with id "myFileInput" representing the image file input
+alert("aaa")
+    let out = null;
+// Add an event listener to the file input element
+    document.getElementById('imageToGuess').addEventListener('change', handleFileSelect, false);
 
+// Function to handle the file selection
+    function handleFileSelect(event) {
+        // Assuming you have an <input type="file"> element with id "myFileInput" representing the image file input
 
+// Add an event listener to the file input element
+        document.getElementById('imageToGuess').addEventListener('change', handleFileSelect, false);
+
+// Function to handle the file selection
+        function handleFileSelect(event) {
+            const file = event.target.files[0]; // Get the selected file
+
+            const reader = new FileReader(); // Create a FileReader object
+
+            reader.onload = (event) => {
+                const arrayBuffer = event.target.result; // Get the ArrayBuffer from the FileReader
+
+                const uint8Array = new Uint8Array(arrayBuffer); // Convert ArrayBuffer to Uint8Array
+
+                const floatArray = new Float32Array(uint8Array); // Convert Uint8Array to Float32Array
+
+                console.log(floatArray);
+                out = floatArray;
+            };
+
+            reader.readAsArrayBuffer(file); // Read the file as an ArrayBuffer
+        }
+
+    }
+
+    return out;
 }
 
 
